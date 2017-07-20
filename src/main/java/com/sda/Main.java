@@ -1,16 +1,10 @@
 package com.sda;
 
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.javafx.collections.MappingChange;
-import jdk.nashorn.api.scripting.JSObject;
-import jdk.nashorn.internal.codegen.ObjectClassGenerator;
-import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
 
 /**
  * Created by RENT on 2017-07-20.
@@ -24,10 +18,10 @@ public class Main {
     public static void main(String[] args) {
 
 
-        Person person = new Person("John","Clark");
-        Person person2 = new Person("Barack","Obama");
+        Person person = new Person("John", "Clark");
+        Person person2 = new Person("Barack", "Obama");
         ObjectMapper objectMapper = new ObjectMapper();
-        Person [] tab = {person, person2 };
+        Person[] tab = {person, person2};
 
         try {
             System.out.println(objectMapper
@@ -46,8 +40,23 @@ public class Main {
             System.out.println(objectMapper.writeValueAsString(person));
             System.out.println(objectMapper.writeValueAsString(tab));
             System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(adres1));
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        String response = "{\n" +
+                "  \"firstname\": \"John\",\n" +
+                "  \"lastname\": \"Doe\",\n" +
+                "  \"memberStatus\": \"Full\"\n" +
+                "}";
+
+        try {
+            Person person1 = objectMapper.readValue(response, Person.class);
+            System.out.println(person1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
