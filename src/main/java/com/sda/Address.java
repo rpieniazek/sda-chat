@@ -8,9 +8,7 @@ import java.util.List;
  */
 public class Address {
 
-    //stworz klase Address(ulica, miasto),
-    //dodaj w klasie Address  pole reprezentujacej lokatorow
-    //zainicjuj przykladowymi zmiennymi
+
 
     public String street;
     public String city;

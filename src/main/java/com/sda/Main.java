@@ -3,6 +3,7 @@ package com.sda;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.cars.Car;
 
@@ -14,57 +15,20 @@ import java.util.List;
  * Created by RENT on 2017-07-20.
  */
 public class Main {
-    //stworz klase Address(ulica, miasto),
-    //dodaj w klasie Address  pole reprezentujacej lokatorow
-    //zainicjuj przykladowymi zmiennymi
-//        objectMapper.writerWithDefaultPrettyPrinter();
+    //na repozytorium znajduje sie plik person2.json
+    //trzeba dostosowac strukture naszych klas, aby mozliwe bylo jego parsowanie
+    //cala reszte klas mozna usunac, bo mamy je 'w razie potrzeby' na branchu step1
+    //nastepnym etapem bedzie pobranie jsona z url
+    //przydatne beda klasy URlConnection i URl.
 
     public static void main(String[] args) {
 
-
-        Person person = new Person("John", "Clark");
-        Person person2 = new Person("Barack", "Obama");
         ObjectMapper objectMapper = new ObjectMapper();
-        Person[] tab = {person, person2};
-
-        try {
-            System.out.println(objectMapper
-                    .writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(DistrictFactory.create()));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        Address adres1 = new Address("Dubois", "Wroclaw");
-
-        adres1.addLocator(person);
-        adres1.addLocator(person2);
-
-        try {
-            System.out.println(objectMapper.writeValueAsString(person));
-            System.out.println(objectMapper.writeValueAsString(tab));
-            System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(adres1));
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        String response = "{\n" +
-                "  \"firstname\": \"John\",\n" +
-                "  \"lastname\": \"Doe\",\n" +
-                "  \"memberStatus\": \"Full\"\n" +
-                "}";
-
-        try {
-            Person person1 = objectMapper.readValue(response, Person.class);
-            System.out.println(person1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
         File jsonArrayFile = new File("list.json");
         try {
-            List<Car> cars = objectMapper.readValue(jsonArrayFile, new TypeReference<List<Car>>() {});
+            List<Car> cars = objectMapper.readValue(jsonArrayFile, new TypeReference<List<Car>>() {
+            });
             System.out.println(cars);
         } catch (IOException e) {
             e.printStackTrace();
