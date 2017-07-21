@@ -7,28 +7,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Person {
 
-    @JsonProperty(value = "firstname")
+    public int id;
     public String name;
-
-    @JsonProperty(value = "lastname")
-    public String lastName;
-
-    public MemberStatus memberStatus;
-
-    public Person() {
-    }
-
-    public Person(String name, String lastName) {
-        this.name = name;
-        this.lastName = lastName;
-    }
+    public String username;
+    public String email;
+    public String phone;
+    public String website;
+    public Address address;
+    public Company company;
 
     @Override
     public String toString() {
         return "Person{" +
-                "name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", memberStatus='" + memberStatus + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", phone='" + phone + '\'' +
+                ", website='" + website + '\'' +
+                ", address=" + address +
+                ", company=" + company +
                 '}';
     }
 }
