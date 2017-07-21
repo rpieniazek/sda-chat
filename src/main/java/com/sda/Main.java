@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -39,12 +40,12 @@ public class Main {
             e.printStackTrace();
         }
 
-        //List<Person> persons = new ArrayList<>();
-        //persons.add(person);
-        List<Person> persons = singletonList(person);
+        //List<Person> personList = new ArrayList<>();
+        //personList.add(person);
+        List<Person> personList = singletonList(person);
 
         System.out.println("wersja1");
-        persons.forEach(new Consumer<Person>() {
+        personList.forEach(new Consumer<Person>() {
             @Override
             public void accept(Person person) {
                 System.out.println(person);
@@ -52,14 +53,35 @@ public class Main {
         });
 
         System.out.println("wersja2");
-        persons.forEach(new MyConsumer());
+        personList.forEach(new MyConsumer());
 
         System.out.println("wersja3");
-        persons.forEach(personConsumer -> {
+        personList.forEach((personConsumer) -> {
             System.out.println(personConsumer);
         });
 
         System.out.println("wersja4");
-        persons.forEach(System.out::println);
+        personList.forEach(System.out::println);
+
+        //wyswietlenie tylko adresu:
+
+        personList.stream()
+                .map(p -> p.address)
+                .peek(System.out::println)
+                .map(address -> printAddress(address))
+                .peek(System.out::println)
+                .collect(Collectors.toList());
+        System.out.println("---------------");
+
+        for(int i = 0 ; i<10; i++){
+            System.out.println(i);
+        }
+        System.out.println("---------------");
+        IntStream.range(0,10)
+                .forEach(i -> System.out.println(i));
+    }
+
+    public static String printAddress(Address adddress) {
+        return "Addres is " + adddress.city + " "+ adddress.street;
     }
 }
