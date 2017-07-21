@@ -1,1 +1,10 @@
-"[{ \"color\" : \"Black\", \"type\" : \"BMW\" }, { \"color\" : \"Red\", \"type\" : \"FIAT\" }]"
+[
+  {
+    "color":"Black",
+    "type":"BMW"
+  },
+  {
+    "color":"Red",
+    "type":"FIAT"
+  }
+]
