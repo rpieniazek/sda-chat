@@ -13,7 +13,7 @@ public class Person {
     @JsonProperty(value = "lastname")
     public String lastName;
 
-    public String memberStatus;
+    public MemberStatus memberStatus;
 
     public Person() {
     }
