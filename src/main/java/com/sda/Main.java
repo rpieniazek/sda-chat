@@ -41,19 +41,19 @@ public class Main {
                     .map(person -> person.email)
                     .forEach(System.out::println);
 
-            //Sprawdź, czy jest osoba, której ulica zaczyna  sie na jakas litere
 
             System.out.println("--------------------------");
+            //Sprawdź, czy jest osoba, której ulica zaczyna  sie na jakas litere
             personList
                     .stream()
                     .filter(p -> p.address.street.toUpperCase().startsWith("N"))
-                    .findAny().ifPresent(p -> System.out.println(p.name));
+                    .findAny()
+                    .ifPresent(p -> System.out.println(p.name));
 
             Optional<Person> person2 = personList
                     .stream()
                     .filter(p -> p.address.street.toUpperCase().startsWith("N"))
                     .findAny();
-
 
             System.out.println("-----------------------");
             if (person2.isPresent()) {
@@ -63,8 +63,21 @@ public class Main {
                 System.out.println("Nobody live in street starts with N");
             }
 
+            System.out.println("-----------------------");
 
+            // 2. method Sprawdź, czy jest osoba, której ulica zaczyna  sie na jakas litere
 
+            String streetOpt = personList.stream()
+                    .filter(p -> p.address.street.toUpperCase().startsWith("N"))
+                    .map(p -> p.name)
+                    .findAny()
+                    .orElse("Person not found");
+            System.out.println(streetOpt);
+
+            System.out.println("-----------------------");
+            //Posortuj osoby wg username
+            System.out.println("-----------------------");
+            //Wyswietlic srednia dlugosc username, najwieksza dlugosc, najmniejsza.
         } catch (IOException e) {
             e.printStackTrace();
         }
