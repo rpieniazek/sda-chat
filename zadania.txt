@@ -27,8 +27,12 @@ Można pobrać tego jsona bezpośrednio w object mapperze (przeciazona metoda re
 --------------------------------------------------
 Następnie, gdy będziemy mieli już pobraną kolekcje, to poćwiczmy stream api:
 
-Sprawdź, czy jest osoba, której ulica zaczyna  sie na jakas litere
 Zrób liste mailingową
-Posortuj osoby wg nazwiska
-
+Sprawdź, czy jest osoba, której ulica zaczyna  sie na jakas litere
+Posortuj osoby wg username
 Wyswietlic srednia dlugosc username, najwieksza dlugosc, najmniejsza.
+
+
+Wróć do list samochodów (użyj gita). Pogrupuj elementy wg marki samochodu. Czyli chciałbym mieć mape z marki na liste jej samochodów.
+
+
