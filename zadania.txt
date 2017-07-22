@@ -5,6 +5,7 @@ https://jsonplaceholder.typicode.com/users
 Znajduje sie kolekcja 10 userów. Każdy user jest taki sam, jak robiliśmy wczoraj.
 Można pobrać tego jsona bezpośrednio w object mapperze (przeciazona metoda readValue), albo w taki sposób:
 
+////////////////////////////////////
     String urlString = "https://jsonplaceholder.typicode.com/users";
     URLConnection urlConnection = new URL(urlString).openConnection();
 
@@ -26,7 +27,7 @@ Można pobrać tego jsona bezpośrednio w object mapperze (przeciazona metoda re
 --------------------------------------------------
 Następnie, gdy będziemy mieli już pobraną kolekcje, to poćwiczmy stream api:
 
-Sprawdź, czy jest osoba, której ulica zaczyna sie na jakas litere
+Sprawdź, czy jest osoba, której ulica zaczyna  sie na jakas litere
 Zrób liste mailingową
 Posortuj osoby wg nazwiska
 
