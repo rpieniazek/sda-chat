@@ -26,6 +26,6 @@ public class Person {
                 ", website='" + website + '\'' +
                 ", address=" + address +
                 ", company=" + company +
-                '}';
+                '}'+'\n';
     }
 }

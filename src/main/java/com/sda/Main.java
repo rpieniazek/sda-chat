@@ -1,5 +1,6 @@
 package com.sda;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -22,10 +23,15 @@ public class Main {
 
     public static void main(String[] args) {
 
+
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            Person person =  objectMapper.readValue( new URL("https://jsonplaceholder.typicode.com/users/3"), Person.class);
-            System.out.println(person);
+
+            URL urlPersonsList = new URL("https://jsonplaceholder.typicode.com/users");
+            List<Person> personList = objectMapper.readValue(urlPersonsList, new TypeReference<List<Person>>() {
+            });
+            System.out.println(personList);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
