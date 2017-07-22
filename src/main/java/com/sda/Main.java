@@ -9,6 +9,8 @@ import com.sda.cars.Car;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by RENT on 2017-07-20.
@@ -66,11 +68,16 @@ public class Main {
         try {
             List<Car> cars = objectMapper.readValue(jsonArrayFile, new TypeReference<List<Car>>() {});
             System.out.println(cars);
+            //Pogrupuj elementy wg marki samochodu. Czyli chciałbym mieć mape z marki na liste jej samochodów.
+            Map<String, List<Car>> listMap = cars
+                    .stream()
+                    .collect(Collectors.groupingBy(c -> c.type));
+            listMap.forEach((k, v) -> System.out.println(k + " " + v));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //Pogrupuj elementy wg marki samochodu. Czyli chciałbym mieć mape z marki na liste jej samochodów.
+
 
     }
 }
