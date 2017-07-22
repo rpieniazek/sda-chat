@@ -69,5 +69,8 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //Pogrupuj elementy wg marki samochodu. Czyli chciałbym mieć mape z marki na liste jej samochodów.
+
     }
 }

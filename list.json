@@ -6,5 +6,9 @@
   {
     "color":"Red",
     "type":"FIAT"
+  },
+  {
+    "color":"White",
+    "type":"FIAT"
   }
 ]
