@@ -96,7 +96,7 @@ public class Main {
                     .ifPresent(System.out::println);
             System.out.println("Person who has minimum username length:");
             personList.stream()
-                    .max(Comparator.comparing(p -> p.username.length()))
+                    .min(Comparator.comparing(p -> p.username.length()))
                     .ifPresent(System.out::println);
 
             System.out.println("Average username length");
