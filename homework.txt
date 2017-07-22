@@ -1,0 +1,12 @@
+Zadanie domowe:
+Napisać aplikację, która dla lokalizacji pobiera aktualna prognoze pogody i wyswietla ją użytkownikowi.
+W najprostszej formie mozna wypisywać dane w konsoli.
+Warto jednak zrobić ‘front’ np. w Swingu, albo JavaFx.
+Apke można rozbudować, zeby co godzine ( schedulery, quarz ) pobierała dane i wyswietla informacje userowi.
+Dodatkowo można tą aplikację umieścić w Tray'u systemowym:
+https://docs.oracle.com/javase/tutorial/uiswing/misc/systemtray.html
+
+Skąd wziac aktualną prognoze? Np tutaj:
+http://api.openweathermap.org/data/2.5/weather?q=Warsaw&appId=ab45f71b10fceff7cc6cb73b1abbce5c
+Format data jest taki sam jak weather.json w repozytorium.
+
