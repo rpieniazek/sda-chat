@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StringArrayDeserializer;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -81,6 +78,33 @@ public class Main {
                     .forEach(p -> System.out.println(p.username));
             System.out.println("-----------------------");
             //Wyswietlic srednia dlugosc username, najwieksza dlugosc, najmniejsza.
+
+            System.out.println("Maximum username length");
+            personList.stream()
+                    .mapToInt(n -> n.username.length())
+                    .max()
+                    .ifPresent(System.out::println);
+            System.out.println("Person who has maximum username length:");
+            personList.stream()
+                    .max(Comparator.comparing(p -> p.username.length()))
+                    .ifPresent(System.out::println);
+
+            System.out.println("Minimum username length");
+            personList.stream()
+                    .mapToInt(n -> n.username.length())
+                    .min()
+                    .ifPresent(System.out::println);
+            System.out.println("Person who has minimum username length:");
+            personList.stream()
+                    .max(Comparator.comparing(p -> p.username.length()))
+                    .ifPresent(System.out::println);
+
+            System.out.println("Average username length");
+            personList.stream()
+                    .mapToInt(n -> n.username.length())
+                    .average()
+                    .ifPresent(System.out::println);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
