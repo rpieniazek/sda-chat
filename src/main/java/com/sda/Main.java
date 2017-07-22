@@ -76,6 +76,9 @@ public class Main {
 
             System.out.println("-----------------------");
             //Posortuj osoby wg username
+            personList.stream()
+                    .sorted((p1,p2) -> p1.username.compareTo(p2.username))
+                    .forEach(p -> System.out.println(p.username));
             System.out.println("-----------------------");
             //Wyswietlic srednia dlugosc username, najwieksza dlugosc, najmniejsza.
         } catch (IOException e) {
