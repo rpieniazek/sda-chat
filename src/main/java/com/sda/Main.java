@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -31,6 +33,13 @@ public class Main {
             List<Person> personList = objectMapper.readValue(urlPersonsList, new TypeReference<List<Person>>() {
             });
             System.out.println(personList);
+
+            //Zrób liste mailingową
+            personList.stream()
+                    .map(person -> person.email)
+                    .forEach(System.out::println);
+
+            //Sprawdź, czy jest osoba, której ulica zaczyna  sie na jakas litere
 
         } catch (IOException e) {
             e.printStackTrace();
