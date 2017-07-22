@@ -1,0 +1,33 @@
+Na stronie:
+
+https://jsonplaceholder.typicode.com/users
+
+Znajduje sie kolekcja 10 userów. Każdy user jest taki sam, jak robiliśmy wczoraj.
+Można pobrać tego jsona bezpośrednio w object mapperze (przeciazona metoda readValue), albo w taki sposób:
+
+    String urlString = "https://jsonplaceholder.typicode.com/users";
+    URLConnection urlConnection = new URL(urlString).openConnection();
+
+
+    BufferedReader in = new BufferedReader(
+            new InputStreamReader(conn.getInputStream()));
+    String inputLine;
+    StringBuilder response = new StringBuilder();
+
+    while ((inputLine = in.readLine()) != null) {
+        response.append(inputLine);
+    }
+    in.close();
+
+
+    System.out.println(response.toString());
+
+
+--------------------------------------------------
+Następnie, gdy będziemy mieli już pobraną kolekcje, to poćwiczmy stream api:
+
+Sprawdź, czy jest osoba, której ulica zaczyna sie na jakas litere
+Zrób liste mailingową
+Posortuj osoby wg nazwiska
+
+Wyswietlic srednia dlugosc username, najwieksza dlugosc, najmniejsza.
