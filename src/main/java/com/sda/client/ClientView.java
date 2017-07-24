@@ -39,17 +39,7 @@ public class ClientView {
 
         sendMessage = new JButton("Send Message");
         sendMessage.addActionListener(event -> {
-            if (messageBox.getText().length() < 1) {
-                // do nothing
-            } else if (messageBox.getText().equals(".clear")) {
-                chatBox.setText("Cleared all messages\n");
-                messageBox.setText("");
-            } else {
-                chatBox.append("<" + "SDA" + ">:  " + messageBox.getText()
-                        + "\n");
-                messageBox.setText("");
-            }
-            messageBox.requestFocusInWindow();
+            handleMessage();
         });
 
         chatBox = new JTextArea();
@@ -81,5 +71,18 @@ public class ClientView {
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newFrame.setSize(470, 300);
         newFrame.setVisible(true);
+    }
+
+    private void handleMessage() {
+        String inputText = messageBox.getText();
+        if (inputText.length() < 1) {
+            // do nothing
+        }  else {
+
+            chatBox.append("<" + "SDA" + ">:  " + inputText
+                    + "\n");
+            messageBox.setText("");
+        }
+        messageBox.requestFocusInWindow();
     }
 }
