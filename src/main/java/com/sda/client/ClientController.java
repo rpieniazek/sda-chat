@@ -21,6 +21,9 @@ public class ClientController implements MessageCommand {
         }
     }
 
+    public void foo(){
+
+    }
     private void initSocket() throws IOException {
         Socket socket = new Socket(HOST_ADDRESS, PORT);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

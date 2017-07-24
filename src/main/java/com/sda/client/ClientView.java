@@ -12,6 +12,11 @@ public class ClientView {
     JButton sendMessage;
     JTextField messageBox; //wpisywana wiadomosc
     JTextArea chatBox; //lista wiadomosci
+    MessageCommand messageCommand;
+
+    public ClientView() {
+        messageCommand = new ClientController();
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -21,6 +26,7 @@ public class ClientView {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             ClientView mainGUI = new ClientView();
             mainGUI.display();
         });
@@ -78,7 +84,7 @@ public class ClientView {
         if (inputText.length() < 1) {
             // do nothing
         }  else {
-
+            messageCommand.sendMessage(inputText);
             chatBox.append("<" + "SDA" + ">:  " + inputText
                     + "\n");
             messageBox.setText("");
