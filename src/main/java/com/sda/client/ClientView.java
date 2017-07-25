@@ -14,8 +14,17 @@ public class ClientView implements IncomingMessageHandler {
     JTextArea chatBox; //lista wiadomosci
     MessageCommand messageCommand;
 
-    public ClientView() {
-        display();
+    public ClientView(ClientController clientController) {
+        this.setMessageCommand(clientController);
+        SwingUtilities.invokeLater(() -> {
+            try {
+                UIManager.setLookAndFeel(UIManager
+                        .getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            display();
+        });
     }
 
     public void setMessageCommand(MessageCommand messageCommand) {
@@ -69,13 +78,12 @@ public class ClientView implements IncomingMessageHandler {
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newFrame.setSize(470, 300);
         newFrame.setVisible(true);
+
     }
 
     private void addMessageToList() {
         String inputText = messageBox.getText();
-        if (inputText.length() < 1) {
-            // do nothing
-        }  else {
+        if (inputText.length() >= 1) {
             messageCommand.sendMessage(inputText);
             messageBox.setText("");
         }

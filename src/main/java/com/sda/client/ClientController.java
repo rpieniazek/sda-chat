@@ -1,6 +1,9 @@
 package com.sda.client;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -12,14 +15,13 @@ public class ClientController implements MessageCommand {
 
     private BufferedReader in;
     private PrintWriter out;
-
-
     private IncomingMessageHandler incomingMessageHandler;
 
-    public ClientController(IncomingMessageHandler handler) {
-        incomingMessageHandler = handler;
+    public ClientController() {
         try {
             initSocket();
+            initView();
+            waitForResponse();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,20 +29,21 @@ public class ClientController implements MessageCommand {
 
     public void waitForResponse() throws IOException {
         String inMessage;
-        while ((inMessage = in.readLine()) != null){
-            System.out.println(" message from server "+ inMessage);
+        System.out.println("waiting for messages");
+        while ((inMessage = in.readLine()) != null) {
+            System.out.println(" message from server " + inMessage);
             incomingMessageHandler.handleMessage(inMessage);
         }
-    }
-
-    public void setIncomingMessageHandler(IncomingMessageHandler incomingMessageHandler) {
-        this.incomingMessageHandler = incomingMessageHandler;
     }
 
     private void initSocket() throws IOException {
         Socket socket = new Socket(HOST_ADDRESS, PORT);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
+    }
+
+    private void initView() {
+        incomingMessageHandler = new ClientView(this);
     }
 
     @Override

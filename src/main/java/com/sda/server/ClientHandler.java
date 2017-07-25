@@ -20,6 +20,7 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Client handler created");
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
@@ -33,6 +34,7 @@ public class ClientHandler implements Runnable {
         String requestMessage;
         while ((requestMessage = in.readLine()) != null) {
             System.out.println(" message from server " + requestMessage);
+            out.println(requestMessage);
         }
     }
 }
