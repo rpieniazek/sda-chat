@@ -15,13 +15,21 @@ public class Server {
         try {
             ServerSocket listener  = new ServerSocket(8888);
             System.out.println("Server listening");
-            Socket socket = listener.accept();
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            String requestMessage;
+            while(true){
+                Socket socket = listener.accept();
+                    new Thread(()->{
+                        try {
+                            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                            String requestMessage;
+                            while ((requestMessage = in.readLine()) != null){
+                                System.out.println(" message from server "+ requestMessage);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
-            while ((requestMessage = in.readLine()) != null){
-                System.out.println(" message from server "+ requestMessage);
+                    }).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
