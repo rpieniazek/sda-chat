@@ -14,26 +14,18 @@ public class ClientView implements IncomingMessageHandler {
     JTextArea chatBox; //lista wiadomosci
     MessageCommand messageCommand;
 
+
+
     public ClientView() {
-        messageCommand = new ClientController();
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                UIManager.setLookAndFeel(UIManager
-                        .getSystemLookAndFeelClassName());
-            } catch (Exception e) {
-
-                e.printStackTrace();
-            }
-
-            ClientView mainGUI = new ClientView();
-            mainGUI.display();
-        });
+    public void setMessageCommand(MessageCommand messageCommand) {
+        this.messageCommand = messageCommand;
     }
+
 
     public void display() {
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
@@ -86,8 +78,6 @@ public class ClientView implements IncomingMessageHandler {
             // do nothing
         }  else {
             messageCommand.sendMessage(inputText);
-            chatBox.append("<" + "SDA" + ">:  " + inputText
-                    + "\n");
             messageBox.setText("");
         }
         messageBox.requestFocusInWindow();
@@ -95,6 +85,7 @@ public class ClientView implements IncomingMessageHandler {
 
     @Override
     public void handleMessage(String incomingMessage) {
-
+        chatBox.append("<" + "Server" + ">:  " + incomingMessage
+                + "\n");
     }
 }

@@ -13,7 +13,11 @@ public class ClientController implements MessageCommand {
     private BufferedReader in;
     private PrintWriter out;
 
+
+    private IncomingMessageHandler incomingMessageHandler;
+
     public ClientController() {
+
         try {
             initSocket();
         } catch (IOException e) {
@@ -21,8 +25,15 @@ public class ClientController implements MessageCommand {
         }
     }
 
-    public void foo(){
+    public void waitForResponse() throws IOException {
+        String inMessage;
+        while ((inMessage = in.readLine()) != null){
+            incomingMessageHandler.handleMessage(inMessage);
+        }
+    }
 
+    public void setIncomingMessageHandler(IncomingMessageHandler incomingMessageHandler) {
+        this.incomingMessageHandler = incomingMessageHandler;
     }
     private void initSocket() throws IOException {
         Socket socket = new Socket(HOST_ADDRESS, PORT);
