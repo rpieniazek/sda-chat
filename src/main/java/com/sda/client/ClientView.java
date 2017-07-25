@@ -14,9 +14,8 @@ public class ClientView implements IncomingMessageHandler {
     JTextArea chatBox; //lista wiadomosci
     MessageCommand messageCommand;
 
-
-
     public ClientView() {
+//        display();
     }
 
     public void setMessageCommand(MessageCommand messageCommand) {

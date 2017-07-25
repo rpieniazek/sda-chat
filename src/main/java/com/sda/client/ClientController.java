@@ -7,8 +7,8 @@ import java.net.Socket;
  * Created by RENT on 2017-07-24.
  */
 public class ClientController implements MessageCommand {
-    private static final String HOST_ADDRESS = "192.168.16.138";
-    private static final Integer PORT = 8080;
+    private static final String HOST_ADDRESS = "127.0.0.1";
+    private static final Integer PORT = 8888;
 
     private BufferedReader in;
     private PrintWriter out;
@@ -16,8 +16,8 @@ public class ClientController implements MessageCommand {
 
     private IncomingMessageHandler incomingMessageHandler;
 
-    public ClientController() {
-
+    public ClientController(IncomingMessageHandler handler) {
+        incomingMessageHandler = handler;
         try {
             initSocket();
         } catch (IOException e) {
@@ -28,6 +28,7 @@ public class ClientController implements MessageCommand {
     public void waitForResponse() throws IOException {
         String inMessage;
         while ((inMessage = in.readLine()) != null){
+            System.out.println(" message from server "+ inMessage);
             incomingMessageHandler.handleMessage(inMessage);
         }
     }
@@ -35,6 +36,7 @@ public class ClientController implements MessageCommand {
     public void setIncomingMessageHandler(IncomingMessageHandler incomingMessageHandler) {
         this.incomingMessageHandler = incomingMessageHandler;
     }
+
     private void initSocket() throws IOException {
         Socket socket = new Socket(HOST_ADDRESS, PORT);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

@@ -13,11 +13,16 @@ import java.net.Socket;
 public class Server {
     public static void main(String[] args) {
         try {
-            ServerSocket listener  = new ServerSocket(8080);
+            ServerSocket listener  = new ServerSocket(8888);
+            System.out.println("Server listening");
             Socket socket = listener.accept();
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            String requestMessage;
 
+            while ((requestMessage = in.readLine()) != null){
+                System.out.println(" message from server "+ requestMessage);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
