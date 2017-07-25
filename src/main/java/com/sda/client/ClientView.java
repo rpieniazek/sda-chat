@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * Created by RENT on 2017-07-24.
  */
-public class ClientView {
+public class ClientView implements IncomingMessageHandler {
     String appName = "SDA Chat";
     JFrame newFrame = new JFrame(appName);
     JButton sendMessage;
@@ -24,6 +24,7 @@ public class ClientView {
                 UIManager.setLookAndFeel(UIManager
                         .getSystemLookAndFeelClassName());
             } catch (Exception e) {
+
                 e.printStackTrace();
             }
 
@@ -45,7 +46,7 @@ public class ClientView {
 
         sendMessage = new JButton("Send Message");
         sendMessage.addActionListener(event -> {
-            handleMessage();
+            addMessageToList();
         });
 
         chatBox = new JTextArea();
@@ -79,7 +80,7 @@ public class ClientView {
         newFrame.setVisible(true);
     }
 
-    private void handleMessage() {
+    private void addMessageToList() {
         String inputText = messageBox.getText();
         if (inputText.length() < 1) {
             // do nothing
@@ -90,5 +91,10 @@ public class ClientView {
             messageBox.setText("");
         }
         messageBox.requestFocusInWindow();
+    }
+
+    @Override
+    public void handleMessage(String incomingMessage) {
+
     }
 }
