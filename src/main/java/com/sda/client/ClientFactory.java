@@ -25,7 +25,7 @@ public class ClientFactory {
 
             mainGUI = new ClientView();
             ClientController clientController = new ClientController(mainGUI);
-            System.out.println("sending message");
+            mainGUI.setMessageCommand(clientController);
             clientController.sendMessage("test");
 //            try {
 //                clientController.waitForResponse();
@@ -33,7 +33,5 @@ public class ClientFactory {
 //                e.printStackTrace();
 //            }
         });
-
-
     }
 }

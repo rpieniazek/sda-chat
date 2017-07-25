@@ -15,7 +15,7 @@ public class ClientView implements IncomingMessageHandler {
     MessageCommand messageCommand;
 
     public ClientView() {
-//        display();
+        display();
     }
 
     public void setMessageCommand(MessageCommand messageCommand) {

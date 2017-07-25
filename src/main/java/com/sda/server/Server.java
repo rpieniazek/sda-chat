@@ -17,19 +17,7 @@ public class Server {
             System.out.println("Server listening");
             while(true){
                 Socket socket = listener.accept();
-                    new Thread(()->{
-                        try {
-                            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                            String requestMessage;
-                            while ((requestMessage = in.readLine()) != null){
-                                System.out.println(" message from server "+ requestMessage);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }).start();
+                new ClientHandler(socket).run();
             }
         } catch (IOException e) {
             e.printStackTrace();
