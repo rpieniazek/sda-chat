@@ -7,15 +7,16 @@ import java.awt.*;
  * Created by RENT on 2017-07-24.
  */
 public class ClientView implements IncomingMessageHandler {
-    String appName = "SDA Chat";
-    JFrame newFrame = new JFrame(appName);
-    JButton sendMessage;
-    JTextField messageBox; //wpisywana wiadomosc
-    JTextArea chatBox; //lista wiadomosci
-    MessageCommand messageCommand;
+    private String appName = "SDA Chat";
+    private JFrame newFrame = new JFrame(appName);
+    private JButton sendMessage;
+    private JTextField messageBox; //wpisywana wiadomosc
+    private JTextArea chatBox; //lista wiadomosci
+    private MessageCommand messageCommand;
 
     public ClientView(ClientController clientController) {
-        this.setMessageCommand(clientController);
+        this.messageCommand = clientController;
+
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(UIManager
@@ -26,11 +27,6 @@ public class ClientView implements IncomingMessageHandler {
             display();
         });
     }
-
-    public void setMessageCommand(MessageCommand messageCommand) {
-        this.messageCommand = messageCommand;
-    }
-
 
     public void display() {
 
