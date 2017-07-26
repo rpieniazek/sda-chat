@@ -10,12 +10,18 @@ import static junit.framework.Assert.*;
  */
 public class EncryptTest {
 
+    public static final String EXPECTED = "edfdcb";
+
     @Test
     public void name() throws Exception {
-        String inputMessage = "baca";
-        String expectedMessage = "edfd";
+        //given
+        String inputMessage = "bacazy";
+        //when
         String encryptedText = Encrypter.encrypt(inputMessage);
 
-        assertEquals(encryptedText,expectedMessage);
+        //then
+
+        assertEquals(EXPECTED,encryptedText);
     }
+
 }
