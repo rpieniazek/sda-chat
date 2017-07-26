@@ -1,38 +1,10 @@
-Na stronie:
+Na dzisiejszych zajęciach zajmiemy się obsługą wielu klientów po stronie serwera.
+Chcielibyśmy, aby wiadomość przesłana do serwera przez jednego Clienta została przesłana do wszystkich połączonych klientów.
+W tym celu trzeba przechowywać referencję do wszystkich aktywnych połączeń i w momencie odebrania wiadomości w jednym ClientHandlerze
+rozpropagować ją do pozostałych.
 
-https://jsonplaceholder.typicode.com/users
+Wszystkie potrzebne informację na temat socketów można doczytać tutaj:
+https://docs.oracle.com/javase/tutorial/networking/sockets/
 
-Znajduje sie kolekcja 10 userów. Każdy user jest taki sam, jak robiliśmy wczoraj.
-Można pobrać tego jsona bezpośrednio w object mapperze (przeciazona metoda readValue), albo w taki sposób:
-
-////////////////////////////////////
-    String urlString = "https://jsonplaceholder.typicode.com/users";
-    URLConnection urlConnection = new URL(urlString).openConnection();
-
-
-    BufferedReader in = new BufferedReader(
-            new InputStreamReader(conn.getInputStream()));
-    String inputLine;
-    StringBuilder response = new StringBuilder();
-
-    while ((inputLine = in.readLine()) != null) {
-        response.append(inputLine);
-    }
-    in.close();
-
-
-    System.out.println(response.toString());
-
-
---------------------------------------------------
-Następnie, gdy będziemy mieli już pobraną kolekcje, to poćwiczmy stream api:
-
-Zrób liste mailingową
-Sprawdź, czy jest osoba, której ulica zaczyna  sie na jakas litere
-Posortuj osoby wg username
-Wyswietlic srednia dlugosc username, najwieksza dlugosc, najmniejsza.
-
-
-Wróć do list samochodów (użyj gita). Pogrupuj elementy wg marki samochodu. Czyli chciałbym mieć mape z marki na liste jej samochodów.
 
 
