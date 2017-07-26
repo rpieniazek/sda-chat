@@ -19,7 +19,7 @@ public class Server {
             System.out.println("Server listening");
             while (true) {
                 Socket socket = listener.accept();
-                ClientHandler clientHandler = new ClientHandler(socket);
+                ClientHandler clientHandler = new ClientHandler(socket, clients);
                 clients.add(clientHandler);
                 new Thread(clientHandler).start();
             }
