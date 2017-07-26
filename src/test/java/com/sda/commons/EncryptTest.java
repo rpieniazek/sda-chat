@@ -12,9 +12,10 @@ public class EncryptTest {
 
     @Test
     public void name() throws Exception {
-        String testMessage = "baca";
-        String encryptedText = Encrypter.encrypt(testMessage);
+        String inputMessage = "baca";
+        String expectedMessage = "edfd";
+        String encryptedText = Encrypter.encrypt(inputMessage);
 
-        assertEquals(encryptedText,testMessage);
+        assertEquals(encryptedText,expectedMessage);
     }
 }

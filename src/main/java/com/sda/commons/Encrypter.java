@@ -5,6 +5,7 @@ package com.sda.commons;
  */
 public class Encrypter {
     public static String encrypt(String plainText) {
+
         return plainText;
     }
 }
