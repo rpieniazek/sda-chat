@@ -10,12 +10,12 @@ import static junit.framework.Assert.*;
  */
 public class EncryptTest {
 
-    public static final String EXPECTED = "edfdcb";
+    public static final String EXPECTED = "edFdCb";
 
     @Test
     public void name() throws Exception {
         //given
-        String inputMessage = "bacazy";
+        String inputMessage = "baCaZy";
         //when
         String encryptedText = Encrypter.encrypt(inputMessage);
 
