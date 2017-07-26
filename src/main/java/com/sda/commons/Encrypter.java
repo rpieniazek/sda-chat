@@ -14,15 +14,15 @@ public class Encrypter {
         for (int i = 0; i < text.length; i++) {
             char c = (char) (text[i] + 3);
 
-            if (c > 'z') {
+            if (isOutOfRange(c)) {
                 c -= ALPHABET_SIZE;
             }
-
             result += c;
         }
-
         return result;
     }
 
-
+    private static boolean isOutOfRange(char c) {
+        return c > 'z' || (c > 'Z' && c < 'a');
+    }
 }
