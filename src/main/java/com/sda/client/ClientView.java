@@ -42,7 +42,7 @@ public class ClientView implements IncomingMessageHandler {
 
         sendMessage = new JButton("Send Message");
         sendMessage.addActionListener(event -> {
-            addMessageToList();
+            sendMessage();
         });
 
         chatBox = new JTextArea();
@@ -77,7 +77,7 @@ public class ClientView implements IncomingMessageHandler {
 
     }
 
-    private void addMessageToList() {
+    private void sendMessage() {
         String inputText = messageBox.getText();
         if (inputText.length() >= 1) {
             messageCommand.sendMessage(inputText);

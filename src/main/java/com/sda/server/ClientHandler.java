@@ -33,8 +33,12 @@ public class ClientHandler implements Runnable {
     private void handleMessage() throws IOException {
         String requestMessage;
         while ((requestMessage = in.readLine()) != null) {
-            System.out.println(" message from server " + requestMessage);
-            out.println(requestMessage);
+            System.out.println("message from client " + requestMessage);
+            printMessageToClient(requestMessage);
         }
+    }
+
+    public void printMessageToClient(String requestMessage) {
+        out.println(requestMessage);
     }
 }

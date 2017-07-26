@@ -6,5 +6,8 @@ rozpropagować ją do pozostałych.
 Wszystkie potrzebne informację na temat socketów można doczytać tutaj:
 https://docs.oracle.com/javase/tutorial/networking/sockets/
 
+Zajmiemy się problemem:
+(java.net.SocketException: Connection reset)
+Try with resources..
 
 
