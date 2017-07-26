@@ -15,8 +15,21 @@ Aktualnie nasze wiadomości "wędrują" przez internet niezaszyfrowane. Wprowadz
 Szyfr symetryczny to taki, w którym można odkodować i zakodować wiadomość tym samym kluczem.
 Najbardziej popularnym szyfrem symetrycznym jest szyfr Cezara. Polega on na przesunięciu "w przód" każdej litery szyfrowanego tekstu.
 Np tekst: "baca" po zaszyfrowaniu kluczem '3' to "edfd".
-Dla uproszczenia przyjmijmy, że przysyłamy tylko litery alfabetu łacińskiego(bez polskich znaków).
 
 
 
-Algorytm szyfrowania napiszemy stosując TDD, czyli pisanie testów przed kodem.
+Czym się będziemy zajmować w czwartek?
+Skończymy szyfrowanie Cezara.
+Słusznie zauważyliście, że nie musimy walidować, czy cos jest napisem, czy nie.
+Możemy na nasze potrzeby założyć, że przesuwamy wszystko o klucz z zakresu <1,127>.
+
+Przerobimy komunikację miedzy clientem i serverem,
+tak aby przesyłała JSON wraz z informacjami:
+-kto przesyła wiadomość
+-o której godzinie
+-treść wiadomości
+
+
+Dodatkowo chcieliśmy zrobić, aby wiadomość wysłała się po wciśnieciu 'entera'.
+Zrobimy to inaczej niż listener. Wykorzystamy metode z frame, która pozwala ustawić domyślny przycisk do 'submitu'.
+
