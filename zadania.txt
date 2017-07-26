@@ -11,3 +11,12 @@ Zajmiemy się problemem:
 Try with resources..
 
 
+Aktualnie nasze wiadomości "wędrują" przez internet niezaszyfrowane. Wprowadzimy więc proste szyfrowanie symetryczne.
+Szyfr symetryczny to taki, w którym można odkodować i zakodować wiadomość tym samym kluczem.
+Najbardziej popularnym szyfrem symetrycznym jest szyfr Cezara. Polega on na przesunięciu "w przód" każdej litery szyfrowanego tekstu.
+Np tekst: "baca" po zaszyfrowaniu kluczem '3' to "edfd".
+Dla uproszczenia przyjmijmy, że przysyłamy tylko litery alfabetu łacińskiego(bez polskich znaków).
+
+
+
+Algorytm szyfrowania napiszemy stosując TDD, czyli pisanie testów przed kodem.
