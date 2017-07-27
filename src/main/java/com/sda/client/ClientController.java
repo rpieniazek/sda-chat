@@ -2,6 +2,7 @@ package com.sda.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sda.commons.Encrypter;
 import com.sda.commons.MessageDto;
 
 import java.io.*;
@@ -34,12 +35,14 @@ public class ClientController implements MessageCommand {
         System.out.println("waiting for messages");
         while ((inMessage = in.readLine()) != null) {
             MessageDto messageDto = convertMessageFromJson(inMessage);
+            messageDto.setContent(Encrypter.decrypt(messageDto.getContent()));
             incomingMessageHandler.handleMessage(messageDto);
         }
     }
 
     @Override
     public void sendMessage(String message) {
+        message = Encrypter.encrypt(message);
         out.println(convertMessageToJson(message));
     }
 

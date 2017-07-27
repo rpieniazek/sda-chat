@@ -5,7 +5,15 @@ package com.sda.commons;
  */
 public class Encrypter {
 
-    public static final int ALPHABET_SIZE = 26;
+    private static int DEFAULT_KEY = 3;
+
+    public static String encrypt(String plainText){
+        return encrypt(plainText, DEFAULT_KEY);
+    }
+
+    public static String decrypt(String encryptedText){
+        return decrypt(encryptedText, DEFAULT_KEY);
+    }
 
     public static String encrypt(String plainText, int key) {
         return shiftText(plainText, key);

@@ -45,3 +45,4 @@ Przerobimy chat tak, zeby obslugiwal pisanie do pojedynczej osoby i do wszystkic
 W tym celu zmodyfikujemy widok tak, aby po lewej byla lista aktualnie podpietych clientow.
 Trzeba bedzie troche zmodyfikowac server tak, aby usuwal 'martwe polaczenie'.
 
+
