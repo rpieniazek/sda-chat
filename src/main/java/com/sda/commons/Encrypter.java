@@ -8,8 +8,11 @@ public class Encrypter {
     public static final int ALPHABET_SIZE = 26;
 
     public static String encrypt(String plainText, int key) {
-
         return shiftText(plainText, key);
+    }
+
+    public static String decrypt(String encryptedText, int key){
+        return shiftText(encryptedText, -key);
     }
 
     private static String shiftText(String text, int key) {
@@ -17,20 +20,8 @@ public class Encrypter {
         String result = "";
         for (int i = 0; i < textAsCarArray.length; i++) {
             char c = (char) (textAsCarArray[i] + key);
-
-            if (isOutOfRange(c)) {
-                c -= ALPHABET_SIZE;
-            }
             result += c;
         }
         return result;
-    }
-
-    public static String decrypt(String encryptedText, int key){
-        return encrypt(encryptedText, -key);
-    }
-
-    private static boolean isOutOfRange(char c) {
-        return c > 'z' || (c > 'Z' && c < 'a');
     }
 }
