@@ -39,16 +39,9 @@ public class ClientController implements MessageCommand {
         }
     }
 
-    private MessageDto convertMessageFromJson(String inMessage) {
-        MessageDto messageDto = null;
-        try {
-            messageDto = objectMapper.readValue(inMessage, MessageDto.class);
-            System.out.println(messageDto.getContent());
-            System.out.println(messageDto.getTime());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return messageDto;
+    @Override
+    public void sendMessage(String message) {
+        out.println(convertMessageToJson(message));
     }
 
     private void initSocketAndObjectMapper() throws IOException {
@@ -62,10 +55,6 @@ public class ClientController implements MessageCommand {
         incomingMessageHandler = new ClientView(this);
     }
 
-    @Override
-    public void sendMessage(String message) {
-        out.println(convertMessageToJson(message));
-    }
 
     private String convertMessageToJson(String message) {
         String messageAsJson = null;
@@ -76,5 +65,15 @@ public class ClientController implements MessageCommand {
             e.printStackTrace();
         }
         return messageAsJson;
+    }
+
+    private MessageDto convertMessageFromJson(String inMessage) {
+        MessageDto messageDto = null;
+        try {
+            messageDto = objectMapper.readValue(inMessage, MessageDto.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return messageDto;
     }
 }
