@@ -56,8 +56,8 @@ public class ClientController implements MessageCommand {
 
     private String convertMessageToJson(String message) {
         String messageAsJson = null;
+        MessageDto messageDto = new MessageDto(message);
         try {
-            MessageDto messageDto = new MessageDto(message);
             messageAsJson = objectMapper.writeValueAsString(messageDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
