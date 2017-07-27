@@ -10,6 +10,15 @@ public class MessageDto {
     private String content;
     private LocalTime time;
 
+    public MessageDto() {
+    }
+
+    public MessageDto(String content) {
+        this.content = content;
+        this.name = "Rafal";
+        this.time = LocalTime.now();
+    }
+
     public String getName() {
         return name;
     }

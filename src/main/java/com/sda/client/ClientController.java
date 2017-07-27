@@ -1,7 +1,10 @@
 package com.sda.client;
 
+import com.sda.commons.MessageDto;
+
 import java.io.*;
 import java.net.Socket;
+import java.time.LocalTime;
 
 /**
  * Created by RENT on 2017-07-24.
@@ -45,6 +48,7 @@ public class ClientController implements MessageCommand {
 
     @Override
     public void sendMessage(String message) {
+        MessageDto messageDto = new MessageDto();
         out.println(message);
     }
 }
