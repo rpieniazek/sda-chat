@@ -11,12 +11,18 @@ import static junit.framework.Assert.*;
 public class EncryptTest {
 
     @Test
-    public void shouldEncrypt() throws Exception {
+    public void shouldEncryptAndDecryptForAllKeys() throws Exception {
+        for(int i = 1;i< 127;i++){
+            assertEncryptedAndDecryptedForKey(i);
+        }
+    }
+
+    private void assertEncryptedAndDecryptedForKey(int key) {
         //given
         String inputMessage = "Hej! !@#123 :-)\n";
         //when
-        String encryptedText = Encrypter.encrypt(inputMessage, 3);
-        String decryptedText = Encrypter.decrypt(encryptedText, 3);
+        String encryptedText = Encrypter.encrypt(inputMessage, key);
+        String decryptedText = Encrypter.decrypt(encryptedText, key);
 
         //then
         assertNotSame(encryptedText,decryptedText);
