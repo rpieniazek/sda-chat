@@ -10,6 +10,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static java.lang.String.*;
+
 /**
  * Created by RENT on 2017-07-27.
  */
@@ -53,5 +55,10 @@ public class MessageDto {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return format("<%s|%s> %s\n", time.toString().substring(0, 8), name, content);
     }
 }

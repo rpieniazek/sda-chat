@@ -33,9 +33,8 @@ public class ClientController implements MessageCommand {
         String inMessage;
         System.out.println("waiting for messages");
         while ((inMessage = in.readLine()) != null) {
-            convertMessageFromJson(inMessage);
-            System.out.println(" message from server " + inMessage);
-            incomingMessageHandler.handleMessage(inMessage);
+            MessageDto messageDto = convertMessageFromJson(inMessage);
+            incomingMessageHandler.handleMessage(messageDto);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.sda.client;
 
+import com.sda.commons.MessageDto;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -87,8 +89,7 @@ public class ClientView implements IncomingMessageHandler {
     }
 
     @Override
-    public void handleMessage(String incomingMessage) {
-        chatBox.append("<" + "Server" + ">:  " + incomingMessage
-                + "\n");
+    public void handleMessage(MessageDto messageDto) {
+        chatBox.append(messageDto.toString());
     }
 }
