@@ -8,6 +8,8 @@ import com.sda.commons.MessageDto;
 import java.io.*;
 import java.net.Socket;
 
+import static com.sda.commons.Encrypter.*;
+
 /**
  * Created by RENT on 2017-07-24.
  */
@@ -35,14 +37,14 @@ public class ClientController implements MessageCommand {
         System.out.println("waiting for messages");
         while ((inMessage = in.readLine()) != null) {
             MessageDto messageDto = convertMessageFromJson(inMessage);
-            messageDto.setContent(Encrypter.decrypt(messageDto.getContent()));
+            messageDto.setContent(decrypt(messageDto.getContent()));
             incomingMessageHandler.handleMessage(messageDto);
         }
     }
 
     @Override
     public void sendMessage(String message) {
-        message = Encrypter.encrypt(message);
+        message = encrypt(message);
         out.println(convertMessageToJson(message));
     }
 
