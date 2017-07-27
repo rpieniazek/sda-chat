@@ -33,9 +33,21 @@ public class ClientController implements MessageCommand {
         String inMessage;
         System.out.println("waiting for messages");
         while ((inMessage = in.readLine()) != null) {
+            convertMessageFromJson(inMessage);
             System.out.println(" message from server " + inMessage);
             incomingMessageHandler.handleMessage(inMessage);
         }
+    }
+
+    private MessageDto convertMessageFromJson(String inMessage) {
+        MessageDto messageDto = null;
+        try {
+            messageDto = objectMapper.readValue(inMessage, MessageDto.class);
+            System.out.println(messageDto.getContent());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return messageDto;
     }
 
     private void initSocketAndObjectMapper() throws IOException {
