@@ -29,6 +29,8 @@ tak aby przesyłała JSON wraz z informacjami:
 -o której godzinie
 -treść wiadomości
 
+Trzeba zmodyfikować kod w miejscu otrzymywania wiadomosci.
+Trzeba sparsowac jsona do obiektu klasy message Dto i przekazac go do widoku.
 
 Dodatkowo chcieliśmy zrobić, aby wiadomość wysłała się po wciśnieciu 'entera'.
 Zrobimy to inaczej niż listener. Wykorzystamy metode z frame, która pozwala ustawić domyślny przycisk do 'submitu'.
