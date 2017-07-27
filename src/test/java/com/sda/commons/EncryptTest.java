@@ -19,6 +19,7 @@ public class EncryptTest {
         String decryptedText = Encrypter.decrypt(encryptedText, 3);
 
         //then
+        assertNotSame(encryptedText,decryptedText);
         assertEquals(decryptedText,inputMessage);
     }
 }

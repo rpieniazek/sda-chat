@@ -9,10 +9,14 @@ public class Encrypter {
 
     public static String encrypt(String plainText, int key) {
 
-        char[] text = plainText.toCharArray();
+        return shiftText(plainText, key);
+    }
+
+    private static String shiftText(String text, int key) {
+        char[] textAsCarArray = text.toCharArray();
         String result = "";
-        for (int i = 0; i < text.length; i++) {
-            char c = (char) (text[i] + key);
+        for (int i = 0; i < textAsCarArray.length; i++) {
+            char c = (char) (textAsCarArray[i] + key);
 
             if (isOutOfRange(c)) {
                 c -= ALPHABET_SIZE;
