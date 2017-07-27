@@ -76,7 +76,7 @@ public class ClientView implements IncomingMessageHandler {
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newFrame.setSize(470, 300);
         newFrame.setVisible(true);
-
+        newFrame.getRootPane().setDefaultButton(sendMessage);
     }
 
     private void sendMessage() {
