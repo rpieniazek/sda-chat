@@ -44,6 +44,7 @@ public class ClientController implements MessageCommand {
         try {
             messageDto = objectMapper.readValue(inMessage, MessageDto.class);
             System.out.println(messageDto.getContent());
+            System.out.println(messageDto.getTime());
         } catch (IOException e) {
             e.printStackTrace();
         }
