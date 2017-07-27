@@ -1,10 +1,11 @@
 package com.sda.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.commons.MessageDto;
 
 import java.io.*;
 import java.net.Socket;
-import java.time.LocalTime;
 
 /**
  * Created by RENT on 2017-07-24.
@@ -16,10 +17,11 @@ public class ClientController implements MessageCommand {
     private BufferedReader in;
     private PrintWriter out;
     private IncomingMessageHandler incomingMessageHandler;
+    private ObjectMapper objectMapper;
 
     public ClientController() {
         try {
-            initSocket();
+            initSocketAndObjectMapper();
             initView();
             waitForResponse();
         } catch (IOException e) {
@@ -36,10 +38,11 @@ public class ClientController implements MessageCommand {
         }
     }
 
-    private void initSocket() throws IOException {
+    private void initSocketAndObjectMapper() throws IOException {
         Socket socket = new Socket(HOST_ADDRESS, PORT);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
+        objectMapper = new ObjectMapper();
     }
 
     private void initView() {
@@ -48,7 +51,17 @@ public class ClientController implements MessageCommand {
 
     @Override
     public void sendMessage(String message) {
-        MessageDto messageDto = new MessageDto();
-        out.println(message);
+        out.println(convertMessageToJson(message));
+    }
+
+    private String convertMessageToJson(String message) {
+        String messageAsJson = null;
+        try {
+            MessageDto messageDto = new MessageDto(message);
+            messageAsJson = objectMapper.writeValueAsString(messageDto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return messageAsJson;
     }
 }
