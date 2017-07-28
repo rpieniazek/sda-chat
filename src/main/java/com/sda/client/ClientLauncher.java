@@ -1,5 +1,7 @@
 package com.sda.client;
 
+import com.sda.commons.ConfigService;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Properties;
@@ -10,15 +12,7 @@ import java.util.Properties;
 public class ClientLauncher {
 
     public static void main(String[] args) {
-        try {
-            FileInputStream fileInputStream = new FileInputStream("application.properties");
-            Properties properties = new Properties(System.getProperties());
-            properties.load(fileInputStream);
-            System.setProperties(properties);
-            System.out.println(System.getProperty("server.ip"));
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
+        ConfigService.loadProperties();
         new ClientController();
     }
 }
