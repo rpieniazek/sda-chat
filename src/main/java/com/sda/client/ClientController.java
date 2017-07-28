@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.Socket;
 
 import static com.sda.commons.Encrypter.*;
+import static com.sda.commons.config.ConfigKeys.SERVER_IP;
 
 /**
  * Created by RENT on 2017-07-24.
@@ -23,7 +24,7 @@ public class ClientController implements MessageCommand {
             initSocket();
             initView();
             System.out.println("in client controller");
-            System.out.println(System.getProperty("server.ip"));
+            System.out.println(System.getProperty(SERVER_IP));
             System.out.println(System.getProperty("server.port"));
             waitForResponse();
         } catch (IOException e) {
