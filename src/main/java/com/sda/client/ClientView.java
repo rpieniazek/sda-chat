@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public class ClientView implements IncomingMessageHandler {
     private String appName = "SDA Chat";
-    private JFrame newFrame = new JFrame(appName);
+    private JFrame mainFrame = new JFrame(appName);
     private JButton sendMessage;
     private JTextField messageBox; //wpisywana wiadomosc
     private JTextArea chatBox; //lista wiadomosci
@@ -35,14 +35,14 @@ public class ClientView implements IncomingMessageHandler {
         JPanel chatPanel = createChatPanel();
         JList usersList = createListPanel();
 
-        newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        newFrame.setSize(470, 300);
-        newFrame.setVisible(true);
-        newFrame.getRootPane().setDefaultButton(sendMessage);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setSize(600, 300);
+        mainFrame.setVisible(true);
+        mainFrame.getRootPane().setDefaultButton(sendMessage);
 
-        newFrame.setLayout(new BorderLayout());
-        newFrame.add(usersList, BorderLayout.WEST);
-        newFrame.add(chatPanel, BorderLayout.EAST);
+        mainFrame.setLayout(new BorderLayout());
+        mainFrame.add(usersList, BorderLayout.LINE_START);
+        mainFrame.add(chatPanel, BorderLayout.LINE_END);
     }
 
     private JList createListPanel() {
@@ -51,7 +51,10 @@ public class ClientView implements IncomingMessageHandler {
         usersListModel.addElement("Tomek");
         usersListModel.addElement("Adam");
 
-        return new JList<>(usersListModel);
+        JList<String> userListPanel = new JList<>(usersListModel);
+        userListPanel.setSize(200, 300);
+        userListPanel.setFixedCellWidth(222);
+        return userListPanel;
     }
 
     private JPanel createChatPanel() {
@@ -94,6 +97,7 @@ public class ClientView implements IncomingMessageHandler {
         southPanel.add(sendMessage, right);
 
         mainPanel.add(BorderLayout.SOUTH, southPanel);
+        mainPanel.setSize(400, 200);
         return mainPanel;
     }
 
