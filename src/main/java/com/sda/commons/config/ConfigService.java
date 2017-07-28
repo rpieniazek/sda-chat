@@ -13,9 +13,16 @@ public class ConfigService {
             Properties properties = new Properties(System.getProperties());
             properties.load(fileInputStream);
             System.setProperties(properties);
-            System.out.println(System.getProperty("server.ip"));
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getString(String key){
+        throw new IllegalStateException("not yet implemented");
+    }
+
+    public static int getInt(String key){
+        throw new IllegalStateException("not yet implemented");
     }
 }

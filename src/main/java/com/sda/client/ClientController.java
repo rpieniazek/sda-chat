@@ -1,19 +1,21 @@
 package com.sda.client;
 
 import com.sda.commons.MessageDto;
+import com.sda.commons.config.ConfigKeys;
+import com.sda.commons.config.ConfigService;
 
 import java.io.*;
 import java.net.Socket;
 
 import static com.sda.commons.Encrypter.*;
 import static com.sda.commons.config.ConfigKeys.SERVER_IP;
+import static com.sda.commons.config.ConfigKeys.SERVER_PORT;
+import static com.sda.commons.config.ConfigService.*;
 
 /**
  * Created by RENT on 2017-07-24.
  */
 public class ClientController implements MessageCommand {
-    private static final String HOST_ADDRESS = "127.0.0.1";
-    private static final Integer PORT = 8888;
 
     private BufferedReader in;
     private PrintWriter out;
@@ -25,7 +27,7 @@ public class ClientController implements MessageCommand {
             initView();
             System.out.println("in client controller");
             System.out.println(System.getProperty(SERVER_IP));
-            System.out.println(System.getProperty("server.port"));
+            System.out.println(System.getProperty(SERVER_PORT));
             waitForResponse();
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,7 +54,8 @@ public class ClientController implements MessageCommand {
     }
 
     private void initSocket() throws IOException {
-        Socket socket = new Socket(HOST_ADDRESS, PORT);
+
+        Socket socket = new Socket(getString(SERVER_IP), getInt(SERVER_PORT));
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
     }
