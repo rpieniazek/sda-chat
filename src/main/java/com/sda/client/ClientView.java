@@ -30,15 +30,12 @@ public class ClientView implements IncomingMessageHandler {
         });
     }
 
-    public void display() {
+    private void display() {
 
         JPanel chatPanel = createChatPanel();
         JList usersList = createListPanel();
 
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(600, 300);
-        mainFrame.setVisible(true);
-        mainFrame.getRootPane().setDefaultButton(sendMessage);
+        configMainPanel();
 
         mainFrame.setLayout(new BorderLayout());
         mainFrame.add(usersList, BorderLayout.LINE_START);
@@ -99,6 +96,13 @@ public class ClientView implements IncomingMessageHandler {
         mainPanel.add(BorderLayout.SOUTH, southPanel);
         mainPanel.setSize(400, 200);
         return mainPanel;
+    }
+
+    private void configMainPanel() {
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setSize(600, 300);
+        mainFrame.setVisible(true);
+        mainFrame.getRootPane().setDefaultButton(sendMessage);
     }
 
     private void sendMessage() {
