@@ -72,11 +72,19 @@ public class ClientView implements IncomingMessageHandler {
 
         mainPanel.add(BorderLayout.SOUTH, southPanel);
 
-        newFrame.add(mainPanel);
+//        newFrame.add(mainPanel);
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newFrame.setSize(470, 300);
         newFrame.setVisible(true);
         newFrame.getRootPane().setDefaultButton(sendMessage);
+
+        DefaultListModel<String> usersListModel = new DefaultListModel<>();
+        usersListModel.addElement("Rafal");
+        usersListModel.addElement("Tomek");
+
+        JList usersList = new JList<>(usersListModel);
+        newFrame.add(usersList);
+
     }
 
     private void sendMessage() {
