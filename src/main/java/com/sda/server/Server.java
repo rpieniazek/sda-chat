@@ -1,10 +1,15 @@
 package com.sda.server;
 
+import com.sda.commons.config.ConfigService;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.sda.commons.config.ConfigKeys.SERVER_PORT;
+import static com.sda.commons.config.ConfigService.*;
 
 /**
  * Created by RENT on 2017-07-24.
@@ -15,7 +20,7 @@ public class Server {
     public Server() {
         clients = new ArrayList<>();
         try {
-            ServerSocket listener = new ServerSocket(8888);
+            ServerSocket listener = new ServerSocket(getInt(SERVER_PORT));
             System.out.println("Server listening");
             while (true) {
                 Socket socket = listener.accept();
@@ -26,9 +31,5 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new Server();
     }
 }
