@@ -22,6 +22,9 @@ public class ClientController implements MessageCommand {
         try {
             initSocket();
             initView();
+            System.out.println("in client controller");
+            System.out.println(System.getProperty("server.ip"));
+            System.out.println(System.getProperty("server.port"));
             waitForResponse();
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,5 +59,4 @@ public class ClientController implements MessageCommand {
     private void initView() {
         incomingMessageHandler = new ClientView(this);
     }
-
 }
