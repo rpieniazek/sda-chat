@@ -1,10 +1,6 @@
 package com.sda.client;
 
-import com.sda.commons.ConfigService;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Properties;
+import static com.sda.commons.config.ConfigService.*;
 
 /**
  * Created by RENT on 2017-07-25.
@@ -12,7 +8,7 @@ import java.util.Properties;
 public class ClientLauncher {
 
     public static void main(String[] args) {
-        ConfigService.loadProperties();
+        loadProperties();
         new ClientController();
     }
 }

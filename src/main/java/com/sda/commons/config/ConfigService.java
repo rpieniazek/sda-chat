@@ -1,4 +1,4 @@
-package com.sda.commons;
+package com.sda.commons.config;
 
 import java.io.FileInputStream;
 import java.util.Properties;
