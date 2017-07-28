@@ -32,6 +32,29 @@ public class ClientView implements IncomingMessageHandler {
 
     public void display() {
 
+        JPanel chatPanel = createChatPanel();
+        JList usersList = createListPanel();
+
+        newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        newFrame.setSize(470, 300);
+        newFrame.setVisible(true);
+        newFrame.getRootPane().setDefaultButton(sendMessage);
+
+        newFrame.setLayout(new BorderLayout());
+        newFrame.add(usersList, BorderLayout.WEST);
+        newFrame.add(chatPanel, BorderLayout.EAST);
+    }
+
+    private JList createListPanel() {
+        DefaultListModel<String> usersListModel = new DefaultListModel<>();
+        usersListModel.addElement("Rafal");
+        usersListModel.addElement("Tomek");
+        usersListModel.addElement("Adam");
+
+        return new JList<>(usersListModel);
+    }
+
+    private JPanel createChatPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
@@ -71,20 +94,7 @@ public class ClientView implements IncomingMessageHandler {
         southPanel.add(sendMessage, right);
 
         mainPanel.add(BorderLayout.SOUTH, southPanel);
-
-//        newFrame.add(mainPanel);
-        newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        newFrame.setSize(470, 300);
-        newFrame.setVisible(true);
-        newFrame.getRootPane().setDefaultButton(sendMessage);
-
-        DefaultListModel<String> usersListModel = new DefaultListModel<>();
-        usersListModel.addElement("Rafal");
-        usersListModel.addElement("Tomek");
-
-        JList usersList = new JList<>(usersListModel);
-        newFrame.add(usersList);
-
+        return mainPanel;
     }
 
     private void sendMessage() {
