@@ -20,7 +20,7 @@ public class ClientController implements MessageCommand {
 
     public ClientController() {
         try {
-            initSocketAndObjectMapper();
+            initSocket();
             initView();
             waitForResponse();
         } catch (IOException e) {
@@ -47,11 +47,10 @@ public class ClientController implements MessageCommand {
         out.println(mapper.mapToJson(message));
     }
 
-    private void initSocketAndObjectMapper() throws IOException {
+    private void initSocket() throws IOException {
         Socket socket = new Socket(HOST_ADDRESS, PORT);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
-
     }
 
     private void initView() {
