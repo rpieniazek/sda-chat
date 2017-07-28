@@ -26,9 +26,8 @@ public class Encrypter {
     private static String shiftText(String text, int key) {
         char[] textAsCarArray = text.toCharArray();
         String result = "";
-        for (int i = 0; i < textAsCarArray.length; i++) {
-            char c = (char) (textAsCarArray[i] + key);
-            result += c;
+        for (char sign : textAsCarArray) {
+            result += (char) (sign + key);
         }
         return result;
     }
