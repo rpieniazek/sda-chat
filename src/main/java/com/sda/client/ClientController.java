@@ -25,9 +25,6 @@ public class ClientController implements MessageCommand {
         try {
             initSocket();
             initView();
-            System.out.println("in client controller");
-            System.out.println(System.getProperty(SERVER_IP));
-            System.out.println(System.getProperty(SERVER_PORT));
             waitForResponse();
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,7 +51,6 @@ public class ClientController implements MessageCommand {
     }
 
     private void initSocket() throws IOException {
-
         Socket socket = new Socket(getString(SERVER_IP), getInt(SERVER_PORT));
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);

@@ -7,7 +7,7 @@ import java.util.Properties;
  * Created by RENT on 2017-07-28.
  */
 public class ConfigService {
-    public static void loadProperties(){
+    public static void loadProperties() {
         try {
             FileInputStream fileInputStream = new FileInputStream("application.properties");
             Properties properties = new Properties(System.getProperties());
@@ -18,11 +18,11 @@ public class ConfigService {
         }
     }
 
-    public static String getString(String key){
-        throw new IllegalStateException("not yet implemented");
+    public static String getString(String key) {
+        return System.getProperty(key);
     }
 
-    public static int getInt(String key){
-        throw new IllegalStateException("not yet implemented");
+    public static int getInt(String key) {
+        return Integer.parseInt(System.getProperty(key));
     }
 }
