@@ -1,8 +1,5 @@
 package com.sda.client;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sda.commons.Encrypter;
 import com.sda.commons.MessageDto;
 
 import java.io.*;
@@ -20,7 +17,6 @@ public class ClientController implements MessageCommand {
     private BufferedReader in;
     private PrintWriter out;
     private IncomingMessageHandler incomingMessageHandler;
-    private ObjectMapper objectMapper;
 
     public ClientController() {
         try {
@@ -36,7 +32,9 @@ public class ClientController implements MessageCommand {
         String inMessage;
         System.out.println("waiting for messages");
         while ((inMessage = in.readLine()) != null) {
-            MessageDto messageDto = convertMessageFromJson(inMessage);
+
+            MessageMapperSingleton mapper = MessageMapperSingleton.getInstance();
+            MessageDto messageDto = mapper.mapFromJson(inMessage);
             messageDto.setContent(decrypt(messageDto.getContent()));
             incomingMessageHandler.handleMessage(messageDto);
         }
@@ -45,39 +43,19 @@ public class ClientController implements MessageCommand {
     @Override
     public void sendMessage(String message) {
         message = encrypt(message);
-        out.println(convertMessageToJson(message));
+        MessageMapperSingleton mapper = MessageMapperSingleton.getInstance();
+        out.println(mapper.mapToJson(message));
     }
 
     private void initSocketAndObjectMapper() throws IOException {
         Socket socket = new Socket(HOST_ADDRESS, PORT);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
-        objectMapper = new ObjectMapper();
+
     }
 
     private void initView() {
         incomingMessageHandler = new ClientView(this);
     }
 
-
-    private String convertMessageToJson(String message) {
-        String messageAsJson = null;
-        MessageDto messageDto = new MessageDto(message);
-        try {
-            messageAsJson = objectMapper.writeValueAsString(messageDto);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return messageAsJson;
-    }
-
-    private MessageDto convertMessageFromJson(String inMessage) {
-        MessageDto messageDto = null;
-        try {
-            messageDto = objectMapper.readValue(inMessage, MessageDto.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return messageDto;
-    }
 }
