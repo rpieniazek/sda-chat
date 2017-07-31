@@ -15,6 +15,7 @@ public class ClientView implements IncomingMessageHandler {
     private JTextField messageBox; //wpisywana wiadomosc
     private JTextArea chatBox; //lista wiadomosci
     private MessageCommand messageCommand;
+    private JPanel loginPanel;
 
     public ClientView(ClientController clientController) {
         this.messageCommand = clientController;
@@ -31,18 +32,13 @@ public class ClientView implements IncomingMessageHandler {
     }
 
     private void display() {
-        JPanel loginPanel = createLoginPanel();
-        JPanel chatPanel = createChatPanel();
-        JList usersList = createListPanel();
-
         configMainPanel();
+        loginPanel = createLoginPanel();
         mainFrame.add(loginPanel);
-//        mainFrame.setLayout(new BorderLayout());
-//        mainFrame.add(usersList, BorderLayout.LINE_START);
-//        mainFrame.add(chatPanel, BorderLayout.LINE_END);
     }
 
     private JPanel createLoginPanel() {
+
         JPanel loginPanel = new JPanel();
         JLabel loginLabel = new JLabel("Login");
         JTextField loginField = new JTextField(30);
@@ -52,12 +48,17 @@ public class ClientView implements IncomingMessageHandler {
         loginPanel.add(loginField);
         loginPanel.add(loginButton);
 
-        loginButton.addActionListener(e -> onSignIn());
+        loginButton.addActionListener(e -> onSignIn(loginField.getText()));
         return loginPanel;
     }
 
-    private void onSignIn() {
-        System.out.println("sign in!");
+    private void onSignIn(String loginName) {
+        loginPanel.setVisible(false);
+        JPanel chatPanel = createChatPanel();
+        JList usersList = createListPanel();
+        mainFrame.setLayout(new BorderLayout());
+        mainFrame.add(usersList, BorderLayout.LINE_START);
+        mainFrame.add(chatPanel, BorderLayout.LINE_END);
     }
 
     private JList createListPanel() {
