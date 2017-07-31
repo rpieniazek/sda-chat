@@ -14,8 +14,9 @@ import static java.lang.String.*;
  */
 public class MessageDto {
     private String senderName;
-
+    private String receiverName;
     private String content;
+    private MessageType messageType;
 
     @JsonSerialize(using = LocalTimeSerializer.class)
     @JsonDeserialize(using = LocalTimeDeserializer.class)
@@ -38,6 +39,14 @@ public class MessageDto {
         this.senderName = senderName;
     }
 
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
     public String getContent() {
         return content;
     }
@@ -52,6 +61,14 @@ public class MessageDto {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
     }
 
     @Override
