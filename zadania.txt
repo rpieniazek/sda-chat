@@ -46,3 +46,5 @@ W tym celu zmodyfikujemy widok tak, aby po lewej byla lista aktualnie podpietych
 Trzeba bedzie troche zmodyfikowac server tak, aby usuwal 'martwe polaczenie'.
 
 
+Trzeba dolozyc informacje do MessageDto. Od kogo i do kogo jest wiadomosc, oraz 'rodzaj wiadomosci'.
+Bedzie to informacja o tym, czy wiadomosc jest inicjujaca (konfiguracyjna), czy zwykla.
