@@ -36,8 +36,10 @@ public class ClientHandler implements Runnable {
 
     private void handleMessage() throws IOException {
         String requestMessage;
+
         while ((requestMessage = in.readLine()) != null) {
             System.out.println("message from client " + requestMessage);
+            clients.put("rafal", this);
 
             for (ClientHandler client : clients.values()) {
                 client.printMessageToClient(requestMessage);

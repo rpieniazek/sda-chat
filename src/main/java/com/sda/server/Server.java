@@ -27,7 +27,6 @@ public class Server {
             while (true) {
                 Socket socket = listener.accept();
                 ClientHandler clientHandler = new ClientHandler(socket, clients);
-                clients.add(clientHandler);
                 new Thread(clientHandler).start();
             }
         } catch (IOException e) {
