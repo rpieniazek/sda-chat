@@ -50,12 +50,15 @@ public class ClientHandler implements Runnable {
         System.out.println("handling message from client " + requestMessage);
 
         MessageDto messageDto = messageMapper.mapFromJson(requestMessage);
-        boolean isConfigMessage = messageDto.getMessageType().equals(MessageType.CONNECT);
-        if (isConfigMessage) {
+        if (isConnectMessage(messageDto)) {
             clients.put(messageDto.getSenderName(), this);
         } else {
             sendToAll(requestMessage);
         }
+    }
+
+    private boolean isConnectMessage(MessageDto messageDto) {
+        return messageDto.getMessageType().equals(MessageType.CONNECT);
     }
 
     private void sendToAll(String requestMessage) {
