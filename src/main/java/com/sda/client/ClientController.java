@@ -41,9 +41,8 @@ public class ClientController implements MessageCommand, LoginCommand {
     @Override
     public void sendMessage(String message) {
         message = encrypt(message);
-        MessageMapperSingleton mapper = MessageMapperSingleton.getInstance();
         MessageDto messageDto = new MessageDto(message);
-        out.println(mapper.mapToJson(messageDto));
+        out.println(messageMapper.mapToJson(messageDto));
     }
 
     private void sendConnectRequest(String username) {
