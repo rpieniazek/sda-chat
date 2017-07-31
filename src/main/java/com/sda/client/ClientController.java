@@ -48,7 +48,7 @@ public class ClientController implements MessageCommand, LoginCommand {
     private void sendConnectRequest(String username) {
         MessageDto dto = new MessageDto();
         dto.setSenderName(username);
-        dto.setMessageType(MessageType.CONFIG);
+        dto.setMessageType(MessageType.CONNECT);
         out.println(messageMapper.mapToJson(dto));
     }
 

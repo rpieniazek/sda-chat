@@ -5,5 +5,5 @@ package com.sda.commons;
  */
 public enum MessageType {
     NORMAL,
-    CONFIG;
+    CONNECT;
 }
