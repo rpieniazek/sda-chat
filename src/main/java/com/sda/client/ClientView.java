@@ -9,6 +9,7 @@ import java.awt.*;
  * Created by RENT on 2017-07-24.
  */
 public class ClientView implements IncomingMessageHandler {
+    private LoginCommand loginCommand;
     private String appName = "SDA Chat";
     private JFrame mainFrame = new JFrame(appName);
     private JButton sendMessage;
@@ -19,6 +20,7 @@ public class ClientView implements IncomingMessageHandler {
 
     public ClientView(ClientController clientController) {
         this.messageCommand = clientController;
+        this.loginCommand = clientController;
 
         SwingUtilities.invokeLater(() -> {
             try {
@@ -59,7 +61,8 @@ public class ClientView implements IncomingMessageHandler {
         mainFrame.setLayout(new BorderLayout());
         mainFrame.add(usersList, BorderLayout.LINE_START);
         mainFrame.add(chatPanel, BorderLayout.LINE_END);
-        //powiadomienie kontrolera o nowym polaczeniu
+
+        new Thread(() -> loginCommand.connectUser(loginName)).start();
     }
 
     private JList createListPanel() {

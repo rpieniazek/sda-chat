@@ -24,30 +24,31 @@ public class ClientController implements MessageCommand, LoginCommand {
 
     public ClientController() {
         messageMapper = MessageMapperSingleton.getInstance();
+        initView();
+    }
 
+    @Override
+    public void connectUser(String username) {
         try {
             initSocket();
-            initView();
+            sendConnectRequest(username);
             waitForResponse();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void connectUser(String username) {
+    private void sendConnectRequest(String username) {
         MessageDto dto = new MessageDto();
         dto.setSenderName(username);
         dto.setMessageType(MessageType.CONFIG);
-
-        messageMapper.mapToJson(dto);
+        out.println(messageMapper.mapToJson(dto));
     }
 
-    public void waitForResponse() throws IOException {
+    private void waitForResponse() throws IOException {
         String inMessage;
         System.out.println("waiting for messages");
         while ((inMessage = in.readLine()) != null) {
-
             MessageDto messageDto = messageMapper.mapFromJson(inMessage);
             messageDto.setContent(decrypt(messageDto.getContent()));
             incomingMessageHandler.handleMessage(messageDto);
