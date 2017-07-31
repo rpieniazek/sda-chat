@@ -20,8 +20,11 @@ public class ClientController implements MessageCommand, LoginCommand {
     private BufferedReader in;
     private PrintWriter out;
     private IncomingMessageHandler incomingMessageHandler;
+    private final MessageMapperSingleton messageMapper;
 
     public ClientController() {
+        messageMapper = MessageMapperSingleton.getInstance();
+
         try {
             initSocket();
             initView();
@@ -37,6 +40,7 @@ public class ClientController implements MessageCommand, LoginCommand {
         dto.setSenderName(username);
         dto.setMessageType(MessageType.CONFIG);
 
+        messageMapper.mapToJson(dto);
     }
 
     public void waitForResponse() throws IOException {
@@ -44,8 +48,7 @@ public class ClientController implements MessageCommand, LoginCommand {
         System.out.println("waiting for messages");
         while ((inMessage = in.readLine()) != null) {
 
-            MessageMapperSingleton mapper = MessageMapperSingleton.getInstance();
-            MessageDto messageDto = mapper.mapFromJson(inMessage);
+            MessageDto messageDto = messageMapper.mapFromJson(inMessage);
             messageDto.setContent(decrypt(messageDto.getContent()));
             incomingMessageHandler.handleMessage(messageDto);
         }
@@ -55,7 +58,8 @@ public class ClientController implements MessageCommand, LoginCommand {
     public void sendMessage(String message) {
         message = encrypt(message);
         MessageMapperSingleton mapper = MessageMapperSingleton.getInstance();
-        out.println(mapper.mapToJson(message));
+        MessageDto messageDto = new MessageDto(message);
+        out.println(mapper.mapToJson(messageDto));
     }
 
     private void initSocket() throws IOException {

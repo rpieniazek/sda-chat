@@ -2,6 +2,7 @@ package com.sda.commons;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sda.client.MessageCommand;
 
 import java.io.IOException;
 
@@ -9,23 +10,22 @@ import java.io.IOException;
  * Created by RENT on 2017-07-28.
  */
 public class MessageMapperSingleton {
-    private static MessageMapperSingleton INSTANCE ;
+    private static MessageMapperSingleton INSTANCE;
     private ObjectMapper objectMapper;
 
     private MessageMapperSingleton() {
         objectMapper = new ObjectMapper();
     }
 
-    public static MessageMapperSingleton getInstance(){
-        if(INSTANCE == null){
+    public static MessageMapperSingleton getInstance() {
+        if (INSTANCE == null) {
             INSTANCE = new MessageMapperSingleton();
         }
         return INSTANCE;
     }
 
-    public String mapToJson(String message) {
+    public String mapToJson(MessageDto messageDto) {
         String messageAsJson = null;
-        MessageDto messageDto = new MessageDto(message);
         try {
             messageAsJson = objectMapper.writeValueAsString(messageDto);
         } catch (JsonProcessingException e) {
