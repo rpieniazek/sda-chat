@@ -31,14 +31,33 @@ public class ClientView implements IncomingMessageHandler {
     }
 
     private void display() {
+        JPanel loginPanel = createLoginPanel();
         JPanel chatPanel = createChatPanel();
         JList usersList = createListPanel();
 
         configMainPanel();
+        mainFrame.add(loginPanel);
+//        mainFrame.setLayout(new BorderLayout());
+//        mainFrame.add(usersList, BorderLayout.LINE_START);
+//        mainFrame.add(chatPanel, BorderLayout.LINE_END);
+    }
 
-        mainFrame.setLayout(new BorderLayout());
-        mainFrame.add(usersList, BorderLayout.LINE_START);
-        mainFrame.add(chatPanel, BorderLayout.LINE_END);
+    private JPanel createLoginPanel() {
+        JPanel loginPanel = new JPanel();
+        JLabel loginLabel = new JLabel("Login");
+        JTextField loginField = new JTextField(30);
+        JButton loginButton = new JButton("Sign in(it's free)");
+
+        loginPanel.add(loginLabel);
+        loginPanel.add(loginField);
+        loginPanel.add(loginButton);
+
+        loginButton.addActionListener(e -> onSignIn());
+        return loginPanel;
+    }
+
+    private void onSignIn() {
+        System.out.println("sign in!");
     }
 
     private JList createListPanel() {
