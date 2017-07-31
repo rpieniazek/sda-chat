@@ -31,7 +31,6 @@ public class ClientView implements IncomingMessageHandler {
     }
 
     private void display() {
-
         JPanel chatPanel = createChatPanel();
         JList usersList = createListPanel();
 

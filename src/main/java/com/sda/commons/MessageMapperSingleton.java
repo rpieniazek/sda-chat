@@ -1,8 +1,7 @@
-package com.sda.client;
+package com.sda.commons;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sda.commons.MessageDto;
 
 import java.io.IOException;
 

@@ -1,8 +1,7 @@
 package com.sda.client;
 
 import com.sda.commons.MessageDto;
-import com.sda.commons.config.ConfigKeys;
-import com.sda.commons.config.ConfigService;
+import com.sda.commons.MessageMapperSingleton;
 
 import java.io.*;
 import java.net.Socket;

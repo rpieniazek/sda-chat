@@ -1,5 +1,7 @@
 package com.sda.commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
@@ -12,6 +14,7 @@ import static java.lang.String.*;
 /**
  * Created by RENT on 2017-07-27.
  */
+
 public class MessageDto {
     private String senderName;
     private String receiverName;
@@ -29,6 +32,7 @@ public class MessageDto {
         this.content = content;
         this.senderName = "Rafal";
         this.time = LocalTime.now();
+        this.messageType = MessageType.NORMAL;
     }
 
     public String getSenderName() {
