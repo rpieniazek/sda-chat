@@ -59,6 +59,7 @@ public class ClientView implements IncomingMessageHandler {
         mainFrame.setLayout(new BorderLayout());
         mainFrame.add(usersList, BorderLayout.LINE_START);
         mainFrame.add(chatPanel, BorderLayout.LINE_END);
+        //powiadomienie kontrolera o nowym polaczeniu
     }
 
     private JList createListPanel() {
