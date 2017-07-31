@@ -2,6 +2,7 @@ package com.sda.client;
 
 import com.sda.commons.MessageDto;
 import com.sda.commons.MessageMapperSingleton;
+import com.sda.commons.MessageType;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,7 +15,7 @@ import static com.sda.commons.config.ConfigService.*;
 /**
  * Created by RENT on 2017-07-24.
  */
-public class ClientController implements MessageCommand {
+public class ClientController implements MessageCommand, LoginCommand {
 
     private BufferedReader in;
     private PrintWriter out;
@@ -28,6 +29,14 @@ public class ClientController implements MessageCommand {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void connectUser(String username) {
+        MessageDto dto = new MessageDto();
+        dto.setSenderName(username);
+        dto.setMessageType(MessageType.CONFIG);
+
     }
 
     public void waitForResponse() throws IOException {
