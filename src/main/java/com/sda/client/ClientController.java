@@ -38,6 +38,14 @@ public class ClientController implements MessageCommand, LoginCommand {
         }
     }
 
+    @Override
+    public void sendMessage(String message) {
+        message = encrypt(message);
+        MessageMapperSingleton mapper = MessageMapperSingleton.getInstance();
+        MessageDto messageDto = new MessageDto(message);
+        out.println(mapper.mapToJson(messageDto));
+    }
+
     private void sendConnectRequest(String username) {
         MessageDto dto = new MessageDto();
         dto.setSenderName(username);
@@ -54,15 +62,6 @@ public class ClientController implements MessageCommand, LoginCommand {
             incomingMessageHandler.handleMessage(messageDto);
         }
     }
-
-    @Override
-    public void sendMessage(String message) {
-        message = encrypt(message);
-        MessageMapperSingleton mapper = MessageMapperSingleton.getInstance();
-        MessageDto messageDto = new MessageDto(message);
-        out.println(mapper.mapToJson(messageDto));
-    }
-
     private void initSocket() throws IOException {
         Socket socket = new Socket(getString(SERVER_IP), getInt(SERVER_PORT));
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
