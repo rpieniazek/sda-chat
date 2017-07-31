@@ -6,17 +6,18 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by RENT on 2017-07-25.
  */
 public class ClientHandler implements Runnable {
-    private List<ClientHandler> clients;
+    private Map<String, ClientHandler> clients;
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
 
-    public ClientHandler(Socket socket, List<ClientHandler> clients) {
+    public ClientHandler(Socket socket, Map<String, ClientHandler> clients) {
         this.socket = socket;
         this.clients = clients;
     }
@@ -37,7 +38,8 @@ public class ClientHandler implements Runnable {
         String requestMessage;
         while ((requestMessage = in.readLine()) != null) {
             System.out.println("message from client " + requestMessage);
-            for (ClientHandler client : clients) {
+
+            for (ClientHandler client : clients.values()) {
                 client.printMessageToClient(requestMessage);
             }
         }
