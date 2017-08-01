@@ -5,5 +5,6 @@ package com.sda.commons;
  */
 public enum MessageType {
     NORMAL,
-    CONNECT;
+    CONNECT,
+    USERS_UPDATE;
 }

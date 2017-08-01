@@ -61,9 +61,18 @@ public class ClientController implements MessageCommand, LoginCommand {
         while ((inMessage = in.readLine()) != null) {
             System.out.printf("received message%s\n", inMessage);
             MessageDto messageDto = messageMapper.mapFromJson(inMessage);
-            messageDto.setContent(decrypt(messageDto.getContent()));
-            incomingMessageHandler.handleMessage(messageDto);
+            if (isNormal(messageDto)) {
+                messageDto.setContent(decrypt(messageDto.getContent()));
+                incomingMessageHandler.handleMessage(messageDto);
+            } else {
+                System.out.println(messageDto.getUsernames());
+
+            }
         }
+    }
+
+    private boolean isNormal(MessageDto dto) {
+        return dto.getMessageType().equals(MessageType.NORMAL);
     }
 
     private void initSocket() throws IOException {

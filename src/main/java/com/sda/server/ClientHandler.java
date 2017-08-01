@@ -57,8 +57,8 @@ public class ClientHandler implements Runnable {
         if (isConnectMessage(messageDto)) {
             String senderName = messageDto.getSenderName();
             notifyClientsAboutNewUser(senderName);
-            notifyUserAboutAllUsers();
             clients.put(senderName, this);
+            notifyUserAboutAllUsers();
         } else {
             sendToAll(requestMessage);
         }
@@ -67,7 +67,8 @@ public class ClientHandler implements Runnable {
     private void notifyUserAboutAllUsers() {
         MessageDto usersDto = new MessageDto();
         usersDto.setUsernames(clients.keySet());
-        sendToAll(messageMapper.mapToJson(usersDto)) ;
+        usersDto.setMessageType(MessageType.USERS_UPDATE);
+        sendToAll(messageMapper.mapToJson(usersDto));
     }
 
     private void notifyClientsAboutNewUser(String senderName) {
