@@ -8,6 +8,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 
 import java.time.LocalTime;
+import java.util.Set;
 
 import static java.lang.String.*;
 
@@ -24,6 +25,8 @@ public class MessageDto {
     @JsonSerialize(using = LocalTimeSerializer.class)
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime time;
+
+    private Set<String> usernames;
 
     public MessageDto() {
         this.time = LocalTime.now();
@@ -73,6 +76,14 @@ public class MessageDto {
 
     public void setMessageType(MessageType messageType) {
         this.messageType = messageType;
+    }
+
+    public Set<String> getUsernames() {
+        return usernames;
+    }
+
+    public void setUsernames(Set<String> usernames) {
+        this.usernames = usernames;
     }
 
     @Override
