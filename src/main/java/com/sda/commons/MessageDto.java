@@ -26,7 +26,7 @@ public class MessageDto {
     private LocalTime time;
 
     public MessageDto() {
-//        this.time = LocalTime.now();
+        this.time = LocalTime.now();
     }
 
     public MessageDto(String content) {

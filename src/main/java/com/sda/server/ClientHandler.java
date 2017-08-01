@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.time.LocalTime;
 import java.util.Map;
 
 import static com.sda.commons.Encrypter.*;
@@ -81,7 +82,6 @@ public class ClientHandler implements Runnable {
     }
 
     private void sendToAll(String requestMessage) {
-
         for (ClientHandler client : clients.values()) {
             client.printMessageToClient(requestMessage);
         }
