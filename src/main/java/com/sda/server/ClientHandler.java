@@ -59,10 +59,11 @@ public class ClientHandler implements Runnable {
         if (isConnectMessage(messageDto)) {
             String senderName = messageDto.getSenderName();
             notifyClientsAboutNewUser(senderName);
+
             clients.put(senderName, this);
 
             //do nowo podlaczonego clienta wyslac liste wszystkich klientow,
-            //a do pozostalych wiadomosc(!), ze zostal podlaczony nowy klient
+
         } else {
             sendToAll(requestMessage);
         }

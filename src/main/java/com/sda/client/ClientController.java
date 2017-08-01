@@ -56,11 +56,13 @@ public class ClientController implements MessageCommand, LoginCommand {
         String inMessage;
         System.out.println("waiting for messages");
         while ((inMessage = in.readLine()) != null) {
+            System.out.printf("received message%s\n", inMessage);
             MessageDto messageDto = messageMapper.mapFromJson(inMessage);
             messageDto.setContent(decrypt(messageDto.getContent()));
             incomingMessageHandler.handleMessage(messageDto);
         }
     }
+
     private void initSocket() throws IOException {
         Socket socket = new Socket(getString(SERVER_IP), getInt(SERVER_PORT));
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
