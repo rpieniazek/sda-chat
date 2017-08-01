@@ -15,11 +15,12 @@ import java.util.Map;
  * Created by RENT on 2017-07-25.
  */
 public class ClientHandler implements Runnable {
-    private Map<String, ClientHandler> clients;
     private Socket socket;
+    private Map<String, ClientHandler> clients;
+    private MessageMapperSingleton messageMapper;
+
     private BufferedReader in;
     private PrintWriter out;
-    private MessageMapperSingleton messageMapper;
 
     public ClientHandler(Socket socket, Map<String, ClientHandler> clients) {
         this.socket = socket;

@@ -17,7 +17,7 @@ public class MessageMapperSingleton {
         objectMapper = new ObjectMapper();
     }
 
-    public static MessageMapperSingleton getInstance() {
+    public static synchronized MessageMapperSingleton getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new MessageMapperSingleton();
         }

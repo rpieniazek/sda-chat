@@ -9,14 +9,15 @@ import java.awt.*;
  * Created by RENT on 2017-07-24.
  */
 public class ClientView implements IncomingMessageHandler {
-    private LoginCommand loginCommand;
-    private String appName = "SDA Chat";
-    private JFrame mainFrame = new JFrame(appName);
+    private JFrame mainFrame = new JFrame("SDA Chat");
     private JButton sendMessage;
     private JTextField messageBox; //wpisywana wiadomosc
     private JTextArea chatBox; //lista wiadomosci
-    private MessageCommand messageCommand;
     private JPanel loginPanel;
+
+    private MessageCommand messageCommand;
+    private LoginCommand loginCommand;
+
 
     public ClientView(ClientController clientController) {
         this.messageCommand = clientController;
@@ -92,6 +93,8 @@ public class ClientView implements IncomingMessageHandler {
         sendMessage.addActionListener(event -> {
             sendMessage();
         });
+        mainFrame.getRootPane().setDefaultButton(sendMessage);
+
 
         chatBox = new JTextArea();
         chatBox.setEditable(false);
@@ -125,7 +128,6 @@ public class ClientView implements IncomingMessageHandler {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(600, 300);
         mainFrame.setVisible(true);
-        mainFrame.getRootPane().setDefaultButton(sendMessage);
     }
 
     private void sendMessage() {

@@ -16,11 +16,11 @@ import static com.sda.commons.config.ConfigService.*;
  * Created by RENT on 2017-07-24.
  */
 public class ClientController implements MessageCommand, LoginCommand {
+    private IncomingMessageHandler incomingMessageHandler;
+    private final MessageMapperSingleton messageMapper;
 
     private BufferedReader in;
     private PrintWriter out;
-    private IncomingMessageHandler incomingMessageHandler;
-    private final MessageMapperSingleton messageMapper;
 
     public ClientController() {
         messageMapper = MessageMapperSingleton.getInstance();
