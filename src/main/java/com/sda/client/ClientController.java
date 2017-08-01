@@ -16,7 +16,7 @@ import static com.sda.commons.config.ConfigService.*;
  * Created by RENT on 2017-07-24.
  */
 public class ClientController implements MessageCommand, LoginCommand {
-    private IncomingMessageHandler incomingMessageHandler;
+    private IncomingEventsHandler incomingEventsHandler;
     private final MessageMapperSingleton messageMapper;
     private String username;
 
@@ -63,10 +63,10 @@ public class ClientController implements MessageCommand, LoginCommand {
             MessageDto messageDto = messageMapper.mapFromJson(inMessage);
             if (isNormal(messageDto)) {
                 messageDto.setContent(decrypt(messageDto.getContent()));
-                incomingMessageHandler.handleMessage(messageDto);
+                incomingEventsHandler.handleMessage(messageDto);
             } else {
                 System.out.println(messageDto.getUsernames());
-
+                incomingEventsHandler.refreshUsers(messageDto.getUsernames());
             }
         }
     }
@@ -82,6 +82,6 @@ public class ClientController implements MessageCommand, LoginCommand {
     }
 
     private void initView() {
-        incomingMessageHandler = new ClientView(this);
+        incomingEventsHandler = new ClientView(this);
     }
 }

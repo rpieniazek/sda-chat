@@ -4,11 +4,13 @@ import com.sda.commons.MessageDto;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by RENT on 2017-07-24.
  */
-public class ClientView implements IncomingMessageHandler {
+public class ClientView implements IncomingEventsHandler {
     private JFrame mainFrame = new JFrame("SDA Chat");
     private JButton sendMessage;
     private JTextField messageBox; //wpisywana wiadomosc
@@ -17,6 +19,7 @@ public class ClientView implements IncomingMessageHandler {
 
     private MessageCommand messageCommand;
     private LoginCommand loginCommand;
+    private JList<String> usersList;
 
 
     public ClientView(ClientController clientController) {
@@ -32,6 +35,18 @@ public class ClientView implements IncomingMessageHandler {
             }
             display();
         });
+    }
+
+    @Override
+    public void handleMessage(MessageDto messageDto) {
+        chatBox.append(messageDto.toString());
+    }
+
+    @Override
+    public void refreshUsers(Set<String> usernames) {
+        String[] usernamesAsArray = usernames.toArray(new String[usernames.size()]);
+        usersList.setListData(usernamesAsArray);
+        usersList.repaint();
     }
 
     private void display() {
@@ -58,7 +73,7 @@ public class ClientView implements IncomingMessageHandler {
     private void onSignIn(String loginName) {
         loginPanel.setVisible(false);
         JPanel chatPanel = createChatPanel();
-        JList usersList = createListPanel();
+        usersList = createListPanel();
         mainFrame.setLayout(new BorderLayout());
         mainFrame.add(usersList, BorderLayout.LINE_START);
         mainFrame.add(chatPanel, BorderLayout.LINE_END);
@@ -67,12 +82,8 @@ public class ClientView implements IncomingMessageHandler {
     }
 
     private JList createListPanel() {
-        DefaultListModel<String> usersListModel = new DefaultListModel<>();
-        usersListModel.addElement("Rafal");
-        usersListModel.addElement("Tomek");
-        usersListModel.addElement("Adam");
-
-        JList<String> userListPanel = new JList<>(usersListModel);
+        DefaultListModel<String> model = new DefaultListModel<>();
+        JList<String> userListPanel = new JList<String>(model);
         userListPanel.setSize(200, 300);
         userListPanel.setFixedCellWidth(222);
         return userListPanel;
@@ -137,10 +148,5 @@ public class ClientView implements IncomingMessageHandler {
             messageBox.setText("");
         }
         messageBox.requestFocusInWindow();
-    }
-
-    @Override
-    public void handleMessage(MessageDto messageDto) {
-        chatBox.append(messageDto.toString());
     }
 }
