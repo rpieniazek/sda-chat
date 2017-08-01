@@ -56,18 +56,24 @@ public class ClientHandler implements Runnable {
 
         MessageDto messageDto = messageMapper.mapFromJson(requestMessage);
         if (isConnectMessage(messageDto)) {
-            MessageDto newClientDto = new MessageDto();
-            String encryptedConnectedInfo = encrypt(format("User %s connected", messageDto.getSenderName()));
-            newClientDto.setContent(encryptedConnectedInfo);
-            newClientDto.setMessageType(MessageType.NORMAL);
-            sendToAll(messageMapper.mapToJson(newClientDto));
-            clients.put(messageDto.getSenderName(), this);
+            String senderName = messageDto.getSenderName();
+            notifyClientsAboutNewUser(senderName);
+            clients.put(senderName, this);
 
             //do nowo podlaczonego clienta wyslac liste wszystkich klientow,
             //a do pozostalych wiadomosc(!), ze zostal podlaczony nowy klient
         } else {
             sendToAll(requestMessage);
         }
+    }
+
+    private void notifyClientsAboutNewUser(String senderName) {
+        MessageDto newClientDto = new MessageDto();
+        String encryptedConnectedInfo = encrypt(format("User %s connected", senderName));
+        newClientDto.setContent(encryptedConnectedInfo);
+        newClientDto.setMessageType(MessageType.NORMAL);
+        newClientDto.setSenderName("Server");
+        sendToAll(messageMapper.mapToJson(newClientDto));
     }
 
     private boolean isConnectMessage(MessageDto messageDto) {
