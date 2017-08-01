@@ -32,7 +32,6 @@ public class MessageDto {
     public MessageDto(String content) {
         this.content = content;
         this.time = LocalTime.now();
-        this.senderName = "Rafal";
         this.messageType = MessageType.NORMAL;
     }
 

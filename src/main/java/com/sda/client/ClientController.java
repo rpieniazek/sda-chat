@@ -18,6 +18,7 @@ import static com.sda.commons.config.ConfigService.*;
 public class ClientController implements MessageCommand, LoginCommand {
     private IncomingMessageHandler incomingMessageHandler;
     private final MessageMapperSingleton messageMapper;
+    private String username;
 
     private BufferedReader in;
     private PrintWriter out;
@@ -29,9 +30,10 @@ public class ClientController implements MessageCommand, LoginCommand {
 
     @Override
     public void connectUser(String username) {
+        this.username = username;
         try {
             initSocket();
-            sendConnectRequest(username);
+            sendConnectRequest();
             waitForResponse();
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,10 +44,11 @@ public class ClientController implements MessageCommand, LoginCommand {
     public void sendMessage(String message) {
         message = encrypt(message);
         MessageDto messageDto = new MessageDto(message);
+        messageDto.setSenderName(username);
         out.println(messageMapper.mapToJson(messageDto));
     }
 
-    private void sendConnectRequest(String username) {
+    private void sendConnectRequest() {
         MessageDto dto = new MessageDto();
         dto.setSenderName(username);
         dto.setMessageType(MessageType.CONNECT);
