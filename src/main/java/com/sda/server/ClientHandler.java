@@ -1,5 +1,6 @@
 package com.sda.server;
 
+import com.sda.commons.Encrypter;
 import com.sda.commons.MessageDto;
 import com.sda.commons.MessageMapperSingleton;
 import com.sda.commons.MessageType;
@@ -10,6 +11,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map;
+
+import static com.sda.commons.Encrypter.*;
+import static java.lang.String.*;
 
 /**
  * Created by RENT on 2017-07-25.
@@ -52,7 +56,15 @@ public class ClientHandler implements Runnable {
 
         MessageDto messageDto = messageMapper.mapFromJson(requestMessage);
         if (isConnectMessage(messageDto)) {
+            MessageDto newClientDto = new MessageDto();
+            String encryptedConnectedInfo = encrypt(format("User %s connected", messageDto.getSenderName()));
+            newClientDto.setContent(encryptedConnectedInfo);
+            newClientDto.setMessageType(MessageType.NORMAL);
+            sendToAll(messageMapper.mapToJson(newClientDto));
             clients.put(messageDto.getSenderName(), this);
+
+            //do nowo podlaczonego clienta wyslac liste wszystkich klientow,
+            //a do pozostalych wiadomosc(!), ze zostal podlaczony nowy klient
         } else {
             sendToAll(requestMessage);
         }
@@ -63,6 +75,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void sendToAll(String requestMessage) {
+
         for (ClientHandler client : clients.values()) {
             client.printMessageToClient(requestMessage);
         }
