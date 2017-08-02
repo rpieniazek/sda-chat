@@ -5,10 +5,10 @@ import javax.swing.*;
 /**
  * Created by RENT on 2017-08-02.
  */
-public class LoginPage extends JPanel {
+public class LoginPanel extends JPanel {
     private ClientView clientView;
 
-    public LoginPage(ClientView clientView) {
+    public LoginPanel(ClientView clientView) {
         this.clientView = clientView;
         createLoginPanel();
     }
