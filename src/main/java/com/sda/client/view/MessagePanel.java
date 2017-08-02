@@ -38,13 +38,7 @@ public class MessagePanel extends JPanel {
         });
         clientView.setDefaultButton(sendMessageButton);
 
-
-        messagesList = new JTextArea();
-        messagesList.setEditable(false);
-        messagesList.setFont(new Font("Serif", Font.PLAIN, 15));
-        messagesList.setLineWrap(true);
-
-        add(new JScrollPane(messagesList), BorderLayout.CENTER);
+        addMessageList();
 
         GridBagConstraints left = new GridBagConstraints();
         left.anchor = GridBagConstraints.LINE_START;
@@ -64,6 +58,15 @@ public class MessagePanel extends JPanel {
 
         add(BorderLayout.SOUTH, southPanel);
         setSize(400, 200);
+    }
+
+    private void addMessageList() {
+        messagesList = new JTextArea();
+        messagesList.setEditable(false);
+        messagesList.setFont(new Font("Serif", Font.PLAIN, 15));
+        messagesList.setLineWrap(true);
+
+        add(new JScrollPane(messagesList), BorderLayout.CENTER);
     }
 
     private void sendMessage() {
