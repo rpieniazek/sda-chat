@@ -9,42 +9,42 @@ import java.awt.*;
 public class MessagePanel extends JPanel {
     private ClientView clientView;
 
-    private JButton sendMessage;
-    private JTextField messageBox; //wpisywana wiadomosc
-    private JTextArea chatBox; //lista wiadomosci
+    private JButton sendMessageButton;
+    private JTextField messageInputField; //wpisywana wiadomosc
+    private JTextArea messagesList; //lista wiadomosci
 
     public MessagePanel(ClientView clientView) {
         this.clientView = clientView;
-        createChatPanel();
+        createMessagePanel();
     }
 
     public void addToMessageList(String line) {
-        chatBox.append(line);
+        messagesList.append(line);
     }
 
-    private void createChatPanel() {
+    private void createMessagePanel() {
         setLayout(new BorderLayout());
 
         JPanel southPanel = new JPanel();
         southPanel.setBackground(Color.BLUE);
         southPanel.setLayout(new GridBagLayout());
 
-        messageBox = new JTextField(30);
-        messageBox.requestFocusInWindow();
+        messageInputField = new JTextField(30);
+        messageInputField.requestFocusInWindow();
 
-        sendMessage = new JButton("Send Message");
-        sendMessage.addActionListener(event -> {
+        sendMessageButton = new JButton("Send Message");
+        sendMessageButton.addActionListener(event -> {
             sendMessage();
         });
-        clientView.setDefaultButton(sendMessage);
+        clientView.setDefaultButton(sendMessageButton);
 
 
-        chatBox = new JTextArea();
-        chatBox.setEditable(false);
-        chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
-        chatBox.setLineWrap(true);
+        messagesList = new JTextArea();
+        messagesList.setEditable(false);
+        messagesList.setFont(new Font("Serif", Font.PLAIN, 15));
+        messagesList.setLineWrap(true);
 
-        add(new JScrollPane(chatBox), BorderLayout.CENTER);
+        add(new JScrollPane(messagesList), BorderLayout.CENTER);
 
         GridBagConstraints left = new GridBagConstraints();
         left.anchor = GridBagConstraints.LINE_START;
@@ -59,19 +59,19 @@ public class MessagePanel extends JPanel {
         right.weightx = 1.0D;
         right.weighty = 1.0D;
 
-        southPanel.add(messageBox, left);
-        southPanel.add(sendMessage, right);
+        southPanel.add(messageInputField, left);
+        southPanel.add(sendMessageButton, right);
 
         add(BorderLayout.SOUTH, southPanel);
         setSize(400, 200);
     }
 
     private void sendMessage() {
-        String inputText = messageBox.getText();
+        String inputText = messageInputField.getText();
         if (inputText.length() >= 1) {
             clientView.sendMessage(inputText);
-            messageBox.setText("");
+            messageInputField.setText("");
         }
-        messageBox.requestFocusInWindow();
+        messageInputField.requestFocusInWindow();
     }
 }

@@ -14,7 +14,6 @@ public class LoginPanel extends JPanel {
     }
 
     private void createLoginPanel() {
-
         JLabel loginLabel = new JLabel("Login");
         JTextField loginField = new JTextField(30);
         JButton loginButton = new JButton("Sign in(it's free)");
@@ -25,5 +24,6 @@ public class LoginPanel extends JPanel {
 
         loginButton.addActionListener(e -> clientView.onSignIn(loginField.getText()));
 
+        clientView.setDefaultButton(loginButton);
     }
 }
