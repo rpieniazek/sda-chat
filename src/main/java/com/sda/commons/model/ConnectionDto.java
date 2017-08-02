@@ -7,7 +7,7 @@ public class ConnectionDto extends AbstractDto {
     private String username;
 
     public ConnectionDto() {
-        super(MessageType.CONNECT);
+        super(EventType.CONNECT);
     }
 
     public String getUsername() {

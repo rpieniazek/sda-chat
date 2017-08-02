@@ -71,7 +71,7 @@ public class ClientController implements MessageCommand, LoginCommand {
     }
 
     private boolean isNormal(AbstractDto dto) {
-        return dto.getMessageType().equals(MessageType.NORMAL);
+        return dto.getEventType().equals(EventType.MESSAGE);
     }
 
     private void initSocket() throws IOException {

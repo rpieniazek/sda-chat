@@ -80,7 +80,7 @@ public class ClientHandler implements Runnable {
     }
 
     private boolean isConnectMessage(AbstractDto abstractDto) {
-        return abstractDto.getMessageType().equals(MessageType.CONNECT);
+        return abstractDto.getEventType().equals(EventType.CONNECT);
     }
 
     private void sendToAll(String requestMessage) {

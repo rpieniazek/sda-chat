@@ -23,7 +23,7 @@ import static com.fasterxml.jackson.annotation.JsonSubTypes.*;
         @Type(value = UsersDto.class)
 })
 public abstract class AbstractDto {
-    private MessageType messageType;
+    private EventType eventType;
 
     @JsonSerialize(using = LocalTimeSerializer.class)
     @JsonDeserialize(using = LocalTimeDeserializer.class)
@@ -32,8 +32,8 @@ public abstract class AbstractDto {
     public AbstractDto() {
     }
 
-    protected AbstractDto(MessageType messageType) {
-        this.messageType = messageType;
+    protected AbstractDto(EventType eventType) {
+        this.eventType = eventType;
         this.time = LocalTime.now();
     }
 
@@ -45,8 +45,8 @@ public abstract class AbstractDto {
         this.time = time;
     }
 
-    public MessageType getMessageType() {
-        return messageType;
+    public EventType getEventType() {
+        return eventType;
     }
 
 }

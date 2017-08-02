@@ -12,7 +12,7 @@ public class MessageDto extends AbstractDto {
     private String content;
 
     public MessageDto() {
-        super(MessageType.NORMAL);
+        super(EventType.MESSAGE);
     }
 
     public MessageDto(String content) {
