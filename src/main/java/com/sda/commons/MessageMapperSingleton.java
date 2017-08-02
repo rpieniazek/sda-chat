@@ -2,6 +2,7 @@ package com.sda.commons;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sda.commons.model.AbstractDto;
 import com.sda.commons.model.MessageDto;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class MessageMapperSingleton {
 
     private MessageMapperSingleton() {
         objectMapper = new ObjectMapper();
+        objectMapper.enableDefaultTyping();
     }
 
     public static synchronized MessageMapperSingleton getInstance() {
@@ -24,7 +26,7 @@ public class MessageMapperSingleton {
         return INSTANCE;
     }
 
-    public String mapToJson(MessageDto messageDto) {
+    public String mapToJson(AbstractDto messageDto) {
         String messageAsJson = null;
         try {
             messageAsJson = objectMapper.writeValueAsString(messageDto);
@@ -34,13 +36,13 @@ public class MessageMapperSingleton {
         return messageAsJson;
     }
 
-    public MessageDto mapFromJson(String inMessage) {
-        MessageDto messageDto = null;
+    public AbstractDto mapFromJson(String inMessage) {
+        AbstractDto dto = null;
         try {
-            messageDto = objectMapper.readValue(inMessage, MessageDto.class);
+            dto = objectMapper.readValue(inMessage, AbstractDto.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return messageDto;
+        return dto;
     }
 }

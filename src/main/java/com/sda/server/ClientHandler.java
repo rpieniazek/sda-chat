@@ -1,5 +1,6 @@
 package com.sda.server;
 
+import com.sda.commons.model.AbstractDto;
 import com.sda.commons.model.MessageDto;
 import com.sda.commons.MessageMapperSingleton;
 import com.sda.commons.model.MessageType;
@@ -53,7 +54,7 @@ public class ClientHandler implements Runnable {
     private void handleMessage(String requestMessage) {
         System.out.println("handling message from client " + requestMessage);
 
-        MessageDto messageDto = messageMapper.mapFromJson(requestMessage);
+        AbstractDto messageDto = messageMapper.mapFromJson(requestMessage);
         if (isConnectMessage(messageDto)) {
             String senderName = messageDto.getSenderName();
             notifyClientsAboutNewUser(senderName);
