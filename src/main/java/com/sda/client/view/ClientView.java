@@ -17,10 +17,10 @@ public class ClientView implements IncomingEventsHandler {
     private JFrame mainFrame = new JFrame("SDA Chat");
     private LoginPanel loginPanel;
     private MessagePanel messagePanel;
+    private UsersList usersList;
 
     private MessageCommand messageCommand;
     private LoginCommand loginCommand;
-    private JList<String> usersList;
 
 
     public ClientView(ClientController clientController) {
@@ -58,29 +58,25 @@ public class ClientView implements IncomingEventsHandler {
         usersList.repaint();
     }
 
-    private void display() {
-        configMainPanel();
-        loginPanel = new LoginPanel(this);
-        mainFrame.add(loginPanel);
-    }
-
     public void onSignIn(String loginName) {
-        loginPanel.setVisible(false);
-        messagePanel = new MessagePanel(this);
-        usersList = createListPanel();
-        mainFrame.setLayout(new BorderLayout());
-        mainFrame.add(usersList, BorderLayout.LINE_START);
-        mainFrame.add(messagePanel, BorderLayout.LINE_END);
+        swapViewOnSignIn();
 
         new Thread(() -> loginCommand.connectUser(loginName)).start();
     }
 
-    private JList createListPanel() {
-        DefaultListModel<String> model = new DefaultListModel<>();
-        JList<String> userListPanel = new JList<String>(model);
-        userListPanel.setSize(200, 300);
-        userListPanel.setFixedCellWidth(222);
-        return userListPanel;
+    private void swapViewOnSignIn() {
+        loginPanel.setVisible(false);
+        messagePanel = new MessagePanel(this);
+        usersList = new UsersList();
+        mainFrame.setLayout(new BorderLayout());
+        mainFrame.add(usersList, BorderLayout.LINE_START);
+        mainFrame.add(messagePanel, BorderLayout.LINE_END);
+    }
+
+    private void display() {
+        configMainPanel();
+        loginPanel = new LoginPanel(this);
+        mainFrame.add(loginPanel);
     }
 
     private void configMainPanel() {
