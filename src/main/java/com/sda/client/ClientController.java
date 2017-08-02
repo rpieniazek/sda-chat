@@ -2,7 +2,7 @@ package com.sda.client;
 
 import com.sda.commons.model.MessageDto;
 import com.sda.commons.MessageMapperSingleton;
-import com.sda.commons.MessageType;
+import com.sda.commons.model.MessageType;
 
 import java.io.*;
 import java.net.Socket;

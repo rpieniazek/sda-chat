@@ -1,7 +1,5 @@
 package com.sda.commons.model;
 
-import com.sda.commons.MessageType;
-
 /**
  * Created by RENT on 2017-08-02.
  */

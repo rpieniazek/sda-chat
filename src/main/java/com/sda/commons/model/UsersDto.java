@@ -1,7 +1,5 @@
 package com.sda.commons.model;
 
-import com.sda.commons.MessageType;
-
 import java.util.Set;
 
 /**

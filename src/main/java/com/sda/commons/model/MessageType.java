@@ -1,4 +1,4 @@
-package com.sda.commons;
+package com.sda.commons.model;
 
 /**
  * Created by RENT on 2017-07-31.
