@@ -6,7 +6,7 @@ package com.sda.commons.model;
 public class ConnectionDto extends AbstractDto {
     private String username;
 
-    protected ConnectionDto() {
+    public ConnectionDto() {
         super(MessageType.CONNECT);
     }
 

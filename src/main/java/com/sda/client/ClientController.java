@@ -1,8 +1,7 @@
 package com.sda.client;
 
-import com.sda.commons.model.MessageDto;
+import com.sda.commons.model.*;
 import com.sda.commons.MessageMapperSingleton;
-import com.sda.commons.model.MessageType;
 
 import java.io.*;
 import java.net.Socket;
@@ -49,9 +48,8 @@ public class ClientController implements MessageCommand, LoginCommand {
     }
 
     private void sendConnectRequest() {
-        MessageDto dto = new MessageDto();
-        dto.setSenderName(username);
-        dto.setMessageType(MessageType.CONNECT);
+        ConnectionDto dto = new ConnectionDto();
+        dto.setUsername(username);
         out.println(messageMapper.mapToJson(dto));
     }
 
@@ -60,18 +58,19 @@ public class ClientController implements MessageCommand, LoginCommand {
         System.out.println("waiting for messages");
         while ((inMessage = in.readLine()) != null) {
             System.out.printf("received message%s\n", inMessage);
-            MessageDto messageDto = messageMapper.mapFromJson(inMessage);
-            if (isNormal(messageDto)) {
+            AbstractDto abstractDto = messageMapper.mapFromJson(inMessage);
+            if (isNormal(abstractDto)) {
+                MessageDto messageDto = (MessageDto) abstractDto;
                 messageDto.setContent(decrypt(messageDto.getContent()));
                 incomingEventsHandler.handleMessage(messageDto);
             } else {
-                System.out.println(messageDto.getUsernames());
-                incomingEventsHandler.refreshUsers(messageDto.getUsernames());
+                UsersDto usersDto = (UsersDto) abstractDto;
+                incomingEventsHandler.refreshUsers(usersDto.getUsernames());
             }
         }
     }
 
-    private boolean isNormal(MessageDto dto) {
+    private boolean isNormal(AbstractDto dto) {
         return dto.getMessageType().equals(MessageType.NORMAL);
     }
 

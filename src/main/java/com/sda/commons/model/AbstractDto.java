@@ -29,6 +29,9 @@ public abstract class AbstractDto {
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime time;
 
+    public AbstractDto() {
+    }
+
     protected AbstractDto(MessageType messageType) {
         this.messageType = messageType;
         this.time = LocalTime.now();

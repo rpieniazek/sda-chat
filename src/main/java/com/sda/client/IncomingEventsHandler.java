@@ -2,6 +2,7 @@ package com.sda.client;
 
 import com.sda.commons.model.MessageDto;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -9,5 +10,5 @@ import java.util.Set;
  */
 public interface IncomingEventsHandler {
     void handleMessage (MessageDto messageDto);
-    void refreshUsers(Set<String> usernames);
+    void refreshUsers(List<String> usernames);
 }

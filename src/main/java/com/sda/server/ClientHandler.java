@@ -1,16 +1,14 @@
 package com.sda.server;
 
-import com.sda.commons.model.AbstractDto;
-import com.sda.commons.model.MessageDto;
+import com.sda.commons.model.*;
 import com.sda.commons.MessageMapperSingleton;
-import com.sda.commons.model.MessageType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Map;
+import java.util.*;
 
 import static com.sda.commons.Encrypter.*;
 import static java.lang.String.*;
@@ -54,9 +52,10 @@ public class ClientHandler implements Runnable {
     private void handleMessage(String requestMessage) {
         System.out.println("handling message from client " + requestMessage);
 
-        AbstractDto messageDto = messageMapper.mapFromJson(requestMessage);
-        if (isConnectMessage(messageDto)) {
-            String senderName = messageDto.getSenderName();
+        AbstractDto abstractDto = messageMapper.mapFromJson(requestMessage);
+        if (isConnectMessage(abstractDto)) {
+            ConnectionDto connectionDto = (ConnectionDto) abstractDto;
+            String senderName = connectionDto.getUsername();
             notifyClientsAboutNewUser(senderName);
             clients.put(senderName, this);
             notifyUserAboutAllUsers();
@@ -66,9 +65,9 @@ public class ClientHandler implements Runnable {
     }
 
     private void notifyUserAboutAllUsers() {
-        MessageDto usersDto = new MessageDto();
-        usersDto.setUsernames(clients.keySet());
-        usersDto.setMessageType(MessageType.USERS_UPDATE);
+        UsersDto usersDto = new UsersDto();
+        List<String> usersList = new ArrayList<>(clients.keySet());
+        usersDto.setUsernames(usersList);
         sendToAll(messageMapper.mapToJson(usersDto));
     }
 
@@ -76,13 +75,12 @@ public class ClientHandler implements Runnable {
         MessageDto newClientDto = new MessageDto();
         String encryptedConnectedInfo = encrypt(format("User %s connected", senderName));
         newClientDto.setContent(encryptedConnectedInfo);
-        newClientDto.setMessageType(MessageType.NORMAL);
         newClientDto.setSenderName("Server");
         sendToAll(messageMapper.mapToJson(newClientDto));
     }
 
-    private boolean isConnectMessage(MessageDto messageDto) {
-        return messageDto.getMessageType().equals(MessageType.CONNECT);
+    private boolean isConnectMessage(AbstractDto abstractDto) {
+        return abstractDto.getMessageType().equals(MessageType.CONNECT);
     }
 
     private void sendToAll(String requestMessage) {

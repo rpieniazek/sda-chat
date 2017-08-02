@@ -4,6 +4,7 @@ import com.sda.commons.model.MessageDto;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,7 +43,7 @@ public class ClientView implements IncomingEventsHandler {
     }
 
     @Override
-    public void refreshUsers(Set<String> usernames) {
+    public void refreshUsers(List<String> usernames) {
         String[] usernamesAsArray = usernames.toArray(new String[usernames.size()]);
         usersList.setListData(usernamesAsArray);
         usersList.repaint();

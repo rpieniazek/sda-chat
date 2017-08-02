@@ -44,11 +44,6 @@ public class MessageDto extends AbstractDto {
         this.content = content;
     }
 
-
-    public void setMessageType(MessageType messageType) {
-//        this.messageType = messageType;
-    }
-
     @Override
     public String toString() {
         return format("<%s|%s> %s\n", getTime().toString().substring(0, 8), senderName, content);
