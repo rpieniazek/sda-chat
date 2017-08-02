@@ -54,26 +54,11 @@ public class ClientView implements IncomingEventsHandler {
 
     private void display() {
         configMainPanel();
-        loginPanel = createLoginPanel();
+        loginPanel = new LoginPage(this);
         mainFrame.add(loginPanel);
     }
 
-    private JPanel createLoginPanel() {
-
-        JPanel loginPanel = new JPanel();
-        JLabel loginLabel = new JLabel("Login");
-        JTextField loginField = new JTextField(30);
-        JButton loginButton = new JButton("Sign in(it's free)");
-
-        loginPanel.add(loginLabel);
-        loginPanel.add(loginField);
-        loginPanel.add(loginButton);
-
-        loginButton.addActionListener(e -> onSignIn(loginField.getText()));
-        return loginPanel;
-    }
-
-    private void onSignIn(String loginName) {
+    public void onSignIn(String loginName) {
         loginPanel.setVisible(false);
         JPanel chatPanel = createChatPanel();
         usersList = createListPanel();
