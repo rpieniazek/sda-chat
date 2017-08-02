@@ -1,5 +1,6 @@
 package com.sda.client;
 
+import com.sda.client.view.ClientView;
 import com.sda.commons.model.*;
 import com.sda.commons.MessageMapperSingleton;
 

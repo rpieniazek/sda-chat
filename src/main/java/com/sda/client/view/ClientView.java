@@ -1,11 +1,14 @@
-package com.sda.client;
+package com.sda.client.view;
 
+import com.sda.client.ClientController;
+import com.sda.client.IncomingEventsHandler;
+import com.sda.client.LoginCommand;
+import com.sda.client.MessageCommand;
 import com.sda.commons.model.MessageDto;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by RENT on 2017-07-24.
