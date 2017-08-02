@@ -1,6 +1,6 @@
 package com.sda.client;
 
-import com.sda.commons.MessageDto;
+import com.sda.commons.model.MessageDto;
 
 import java.util.Set;
 

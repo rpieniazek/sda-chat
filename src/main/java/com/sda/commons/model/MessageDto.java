@@ -1,4 +1,4 @@
-package com.sda.commons;
+package com.sda.commons.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.sda.commons.MessageType;
 
 import java.time.LocalTime;
 import java.util.Set;
@@ -16,26 +17,18 @@ import static java.lang.String.*;
  * Created by RENT on 2017-07-27.
  */
 
-public class MessageDto {
+public class MessageDto extends AbstractDto {
     private String senderName;
     private String receiverName;
     private String content;
-    private MessageType messageType;
-
-    @JsonSerialize(using = LocalTimeSerializer.class)
-    @JsonDeserialize(using = LocalTimeDeserializer.class)
-    private LocalTime time;
-
-    private Set<String> usernames;
 
     public MessageDto() {
-        this.time = LocalTime.now();
+        super(MessageType.NORMAL);
     }
 
     public MessageDto(String content) {
+        this();
         this.content = content;
-        this.time = LocalTime.now();
-        this.messageType = MessageType.NORMAL;
     }
 
     public String getSenderName() {
@@ -62,32 +55,13 @@ public class MessageDto {
         this.content = content;
     }
 
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
-    }
-
-    public MessageType getMessageType() {
-        return messageType;
-    }
 
     public void setMessageType(MessageType messageType) {
-        this.messageType = messageType;
-    }
-
-    public Set<String> getUsernames() {
-        return usernames;
-    }
-
-    public void setUsernames(Set<String> usernames) {
-        this.usernames = usernames;
+//        this.messageType = messageType;
     }
 
     @Override
     public String toString() {
-        return format("<%s|%s> %s\n", time.toString().substring(0, 8), senderName, content);
+        return format("<%s|%s> %s\n", getTime().toString().substring(0, 8), senderName, content);
     }
 }

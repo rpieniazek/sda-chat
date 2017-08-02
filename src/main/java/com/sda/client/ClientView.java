@@ -1,11 +1,10 @@
 package com.sda.client;
 
-import com.sda.commons.MessageDto;
+import com.sda.commons.model.MessageDto;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by RENT on 2017-07-24.

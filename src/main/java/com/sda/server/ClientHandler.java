@@ -1,6 +1,6 @@
 package com.sda.server;
 
-import com.sda.commons.MessageDto;
+import com.sda.commons.model.MessageDto;
 import com.sda.commons.MessageMapperSingleton;
 import com.sda.commons.MessageType;
 
