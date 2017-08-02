@@ -24,22 +24,36 @@ public class MessagePanel extends JPanel {
 
     private void createMessagePanel() {
         setLayout(new BorderLayout());
+        addMessageInput();
+        addSendMessageButton();
+        addMessageList();
+        addMessageLinePanel();
+        setSize(400, 200);
+    }
 
-        JPanel southPanel = new JPanel();
-        southPanel.setBackground(Color.BLUE);
-        southPanel.setLayout(new GridBagLayout());
-
+    private void addMessageInput() {
         messageInputField = new JTextField(30);
         messageInputField.requestFocusInWindow();
+    }
 
+    private void addSendMessageButton() {
         sendMessageButton = new JButton("Send Message");
         sendMessageButton.addActionListener(event -> {
             sendMessage();
         });
         clientView.setDefaultButton(sendMessageButton);
+    }
 
-        addMessageList();
+    private void addMessageList() {
+        messagesList = new JTextArea();
+        messagesList.setEditable(false);
+        messagesList.setFont(new Font("Serif", Font.PLAIN, 15));
+        messagesList.setLineWrap(true);
 
+        add(new JScrollPane(messagesList), BorderLayout.CENTER);
+    }
+
+    private void addMessageLinePanel() {
         GridBagConstraints left = new GridBagConstraints();
         left.anchor = GridBagConstraints.LINE_START;
         left.fill = GridBagConstraints.HORIZONTAL;
@@ -53,20 +67,14 @@ public class MessagePanel extends JPanel {
         right.weightx = 1.0D;
         right.weighty = 1.0D;
 
-        southPanel.add(messageInputField, left);
-        southPanel.add(sendMessageButton, right);
+        JPanel messageLinePanel = new JPanel();
+        messageLinePanel.setBackground(Color.BLUE);
+        messageLinePanel.setLayout(new GridBagLayout());
 
-        add(BorderLayout.SOUTH, southPanel);
-        setSize(400, 200);
-    }
+        messageLinePanel.add(messageInputField, left);
+        messageLinePanel.add(sendMessageButton, right);
 
-    private void addMessageList() {
-        messagesList = new JTextArea();
-        messagesList.setEditable(false);
-        messagesList.setFont(new Font("Serif", Font.PLAIN, 15));
-        messagesList.setLineWrap(true);
-
-        add(new JScrollPane(messagesList), BorderLayout.CENTER);
+        add(BorderLayout.SOUTH, messageLinePanel);
     }
 
     private void sendMessage() {
