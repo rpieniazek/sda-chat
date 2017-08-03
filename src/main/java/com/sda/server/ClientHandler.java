@@ -17,6 +17,7 @@ import static java.lang.String.*;
  * Created by RENT on 2017-07-25.
  */
 public class ClientHandler implements Runnable {
+    public static final String ALL = "ALL";
     private Socket socket;
     private Map<String, ClientHandler> clients;
     private MessageMapperSingleton messageMapper;
@@ -73,11 +74,15 @@ public class ClientHandler implements Runnable {
 
     private void handleMessage(String requestMessage, MessageDto messageDto) {
         String receiverName = messageDto.getReceiverName();
-        if (receiverName == null) {
+        if (isNullOrForAll(receiverName)) {
             sendToAll(requestMessage);
         } else {
             sendToOne(receiverName, requestMessage);
         }
+    }
+
+    private boolean isNullOrForAll(String receiverName) {
+        return receiverName == null || ALL.equals(receiverName);
     }
 
     private void sendToOne(String receiverName, String requestMessage) {
@@ -108,6 +113,7 @@ public class ClientHandler implements Runnable {
     private void notifyAllAboutCurrentUsers() {
         UsersDto usersDto = new UsersDto();
         List<String> usersList = new ArrayList<>(clients.keySet());
+        usersList.add(0, ALL);
         usersDto.setUsernames(usersList);
         sendToAll(messageMapper.mapToJson(usersDto));
     }

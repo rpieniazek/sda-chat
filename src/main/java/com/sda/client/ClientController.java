@@ -81,12 +81,12 @@ public class ClientController implements MessageCommand, LoginCommand {
                 handleMessage((MessageDto) abstractDto);
                 break;
             case USERS_UPDATE:
-                handleUsersRefresh((UsersDto) abstractDto);
+                handleUsersListUpdate((UsersDto) abstractDto);
                 break;
         }
     }
 
-    private void handleUsersRefresh(UsersDto usersDto) {
+    private void handleUsersListUpdate(UsersDto usersDto) {
         incomingEventsHandler.refreshUsers(usersDto.getUsernames());
     }
 
