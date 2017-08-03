@@ -14,6 +14,7 @@ import java.util.List;
  * Created by RENT on 2017-07-24.
  */
 public class ClientView implements IncomingEventsHandler {
+    public static final String ALL = "ALL";
     private JFrame mainFrame = new JFrame("SDA Chat");
     private LoginPanel loginPanel;
     private MessagePanel messagePanel;
@@ -40,7 +41,12 @@ public class ClientView implements IncomingEventsHandler {
 
     @Override
     public void handleMessage(MessageDto messageDto) {
-        messagePanel.addToMessageList(messageDto.toString());
+        String receiverName = messageDto.getReceiverName();
+        if (receiverName == null || receiverName.equals(ALL)) {
+            messagePanel.addToMessageList(messageDto.toString());
+        } else {
+            messagePanel.addPrivateMessageToList(messageDto.toString());
+        }
     }
 
     public void sendMessage(String message) {

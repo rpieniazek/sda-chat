@@ -22,6 +22,10 @@ public class MessagePanel extends JPanel {
         messagesList.append(line);
     }
 
+    public void addPrivateMessageToList(String line) {
+        messagesList.append(String.format("PRIV*%s", line));
+    }
+
     private void createMessagePanel() {
         setLayout(new BorderLayout());
         setSize(400, 200);
