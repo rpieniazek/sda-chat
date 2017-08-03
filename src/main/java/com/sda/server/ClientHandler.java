@@ -78,6 +78,7 @@ public class ClientHandler implements Runnable {
             sendToAll(requestMessage);
         } else {
             sendToOne(receiverName, requestMessage);
+            sendToOne(username, requestMessage);
         }
     }
 

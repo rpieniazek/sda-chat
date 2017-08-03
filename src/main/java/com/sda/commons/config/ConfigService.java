@@ -19,8 +19,6 @@ public class ConfigService {
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public static String getString(String key) {
