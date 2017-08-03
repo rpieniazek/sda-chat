@@ -34,7 +34,7 @@ public class ClientController implements MessageCommand, LoginCommand {
         try {
             initSocket();
             sendConnectRequest();
-            waitForResponse();
+            waitForEvent();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,32 +49,8 @@ public class ClientController implements MessageCommand, LoginCommand {
         out.println(messageMapper.mapToJson(messageDto));
     }
 
-    private void sendConnectRequest() {
-        ConnectionDto dto = new ConnectionDto();
-        dto.setUsername(username);
-        out.println(messageMapper.mapToJson(dto));
-    }
-
-    private void waitForResponse() throws IOException {
-        String inMessage;
-        System.out.println("waiting for messages");
-        while ((inMessage = in.readLine()) != null) {
-            System.out.printf("received message%s\n", inMessage);
-            AbstractDto abstractDto = messageMapper.mapFromJson(inMessage);
-            //// TODO: 2017-08-03
-            if (isNormal(abstractDto)) {
-                MessageDto messageDto = (MessageDto) abstractDto;
-                messageDto.setContent(decrypt(messageDto.getContent()));
-                incomingEventsHandler.handleMessage(messageDto);
-            } else {
-                UsersDto usersDto = (UsersDto) abstractDto;
-                incomingEventsHandler.refreshUsers(usersDto.getUsernames());
-            }
-        }
-    }
-
-    private boolean isNormal(AbstractDto dto) {
-        return dto.getEventType().equals(EventType.MESSAGE);
+    private void initView() {
+        incomingEventsHandler = new ClientView(this);
     }
 
     private void initSocket() throws IOException {
@@ -83,7 +59,39 @@ public class ClientController implements MessageCommand, LoginCommand {
         out = new PrintWriter(socket.getOutputStream(), true);
     }
 
-    private void initView() {
-        incomingEventsHandler = new ClientView(this);
+    private void sendConnectRequest() {
+        ConnectionDto dto = new ConnectionDto();
+        dto.setUsername(username);
+        out.println(messageMapper.mapToJson(dto));
+    }
+
+    private void waitForEvent() throws IOException {
+        System.out.println("waiting for events");
+        String event;
+        while ((event = in.readLine()) != null) {
+            System.out.printf("received event%s\n", event);
+            resolveEvent(event);
+        }
+    }
+
+    private void resolveEvent(String inMessage) {
+        AbstractDto abstractDto = messageMapper.mapFromJson(inMessage);
+        switch (abstractDto.getEventType()) {
+            case MESSAGE:
+                handleMessage((MessageDto) abstractDto);
+                break;
+            case USERS_UPDATE:
+                handleUsersRefresh((UsersDto) abstractDto);
+                break;
+        }
+    }
+
+    private void handleUsersRefresh(UsersDto usersDto) {
+        incomingEventsHandler.refreshUsers(usersDto.getUsernames());
+    }
+
+    private void handleMessage(MessageDto messageDto) {
+        messageDto.setContent(decrypt(messageDto.getContent()));
+        incomingEventsHandler.handleMessage(messageDto);
     }
 }
