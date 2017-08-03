@@ -23,6 +23,7 @@ public class ClientHandler implements Runnable {
 
     private BufferedReader in;
     private PrintWriter out;
+    private String username;
 
     public ClientHandler(Socket socket, Map<String, ClientHandler> clients) {
         this.socket = socket;
@@ -37,10 +38,10 @@ public class ClientHandler implements Runnable {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             waitForEvent();
-            System.out.println("exit");
-
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            disconnectUser();
         }
     }
 
@@ -85,21 +86,26 @@ public class ClientHandler implements Runnable {
     }
 
     private void connectNewUser(ConnectionDto connectionDto) {
-        String senderName = connectionDto.getUsername();
-        notifyClientsAboutNewUser(senderName);
-        clients.put(senderName, this);
-        notifyUserAboutAllUsers();
+        username = connectionDto.getUsername();
+        notifyAllUsers(format("User %s connected", username));
+        clients.put(username, this);
+        notifyAllAboutCurrentUsers();
     }
 
-    private void notifyClientsAboutNewUser(String senderName) {
+    private void disconnectUser() {
+        clients.remove(username);
+        notifyAllUsers(format("User %s disconnected", username));
+        notifyAllAboutCurrentUsers();
+    }
+
+    private void notifyAllUsers(String message) {
         MessageDto newClientDto = new MessageDto();
-        String encryptedConnectedInfo = encrypt(format("User %s connected", senderName));
-        newClientDto.setContent(encryptedConnectedInfo);
+        newClientDto.setContent(encrypt(message));
         newClientDto.setSenderName("Server");
         sendToAll(messageMapper.mapToJson(newClientDto));
     }
 
-    private void notifyUserAboutAllUsers() {
+    private void notifyAllAboutCurrentUsers() {
         UsersDto usersDto = new UsersDto();
         List<String> usersList = new ArrayList<>(clients.keySet());
         usersDto.setUsernames(usersList);
