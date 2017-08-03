@@ -44,6 +44,10 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    public void printMessageToClient(String requestMessage) {
+        out.println(requestMessage);
+    }
+
     private void waitForEvent() throws IOException {
         String requestMessage;
         while ((requestMessage = in.readLine()) != null) {
@@ -53,21 +57,34 @@ public class ClientHandler implements Runnable {
 
     private void handleEvent(String requestMessage) {
         System.out.println("handling message from client " + requestMessage);
-
         AbstractDto abstractDto = messageMapper.mapFromJson(requestMessage);
         switch (abstractDto.getEventType()) {
-            case CONNECT:
+            case CONNECT: {
                 connectNewUser((ConnectionDto) abstractDto);
                 break;
-            case MESSAGE:
-
-                sendToAll(requestMessage);
+            }
+            case MESSAGE: {
+                handleMessage(requestMessage, (MessageDto) abstractDto);
                 break;
+            }
         }
     }
 
-    private void connectNewUser(ConnectionDto abstractDto) {
-        ConnectionDto connectionDto = abstractDto;
+    private void handleMessage(String requestMessage, MessageDto messageDto) {
+        String receiverName = messageDto.getReceiverName();
+        if (receiverName == null) {
+            sendToAll(requestMessage);
+        } else {
+            sendToOne(receiverName, requestMessage);
+        }
+    }
+
+    private void sendToOne(String receiverName, String requestMessage) {
+        ClientHandler receiverHandler = clients.get(receiverName);
+        receiverHandler.printMessageToClient(requestMessage);
+    }
+
+    private void connectNewUser(ConnectionDto connectionDto) {
         String senderName = connectionDto.getUsername();
         notifyClientsAboutNewUser(senderName);
         clients.put(senderName, this);
@@ -88,13 +105,10 @@ public class ClientHandler implements Runnable {
         usersDto.setUsernames(usersList);
         sendToAll(messageMapper.mapToJson(usersDto));
     }
+
     private void sendToAll(String requestMessage) {
         for (ClientHandler client : clients.values()) {
             client.printMessageToClient(requestMessage);
         }
-    }
-
-    public void printMessageToClient(String requestMessage) {
-        out.println(requestMessage);
     }
 }
