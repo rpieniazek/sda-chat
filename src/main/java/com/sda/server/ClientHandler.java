@@ -99,10 +99,10 @@ public class ClientHandler implements Runnable {
     }
 
     private void notifyAllUsers(String message) {
-        MessageDto newClientDto = new MessageDto();
-        newClientDto.setContent(encrypt(message));
-        newClientDto.setSenderName("Server");
-        sendToAll(messageMapper.mapToJson(newClientDto));
+        MessageDto messageDto = new MessageDto();
+        messageDto.setContent(encrypt(message));
+        messageDto.setSenderName("Server");
+        sendToAll(messageMapper.mapToJson(messageDto));
     }
 
     private void notifyAllAboutCurrentUsers() {
