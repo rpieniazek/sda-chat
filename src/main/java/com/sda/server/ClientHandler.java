@@ -36,39 +36,42 @@ public class ClientHandler implements Runnable {
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            waitForMessage();
+            waitForEvent();
+            System.out.println("exit");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void waitForMessage() throws IOException {
+    private void waitForEvent() throws IOException {
         String requestMessage;
         while ((requestMessage = in.readLine()) != null) {
-            handleMessage(requestMessage);
+            handleEvent(requestMessage);
         }
     }
 
-    private void handleMessage(String requestMessage) {
+    private void handleEvent(String requestMessage) {
         System.out.println("handling message from client " + requestMessage);
 
         AbstractDto abstractDto = messageMapper.mapFromJson(requestMessage);
-        if (isConnectMessage(abstractDto)) {
-            ConnectionDto connectionDto = (ConnectionDto) abstractDto;
-            String senderName = connectionDto.getUsername();
-            notifyClientsAboutNewUser(senderName);
-            clients.put(senderName, this);
-            notifyUserAboutAllUsers();
-        } else {
-            sendToAll(requestMessage);
+        switch (abstractDto.getEventType()) {
+            case CONNECT:
+                connectNewUser((ConnectionDto) abstractDto);
+                break;
+            case MESSAGE:
+
+                sendToAll(requestMessage);
+                break;
         }
     }
 
-    private void notifyUserAboutAllUsers() {
-        UsersDto usersDto = new UsersDto();
-        List<String> usersList = new ArrayList<>(clients.keySet());
-        usersDto.setUsernames(usersList);
-        sendToAll(messageMapper.mapToJson(usersDto));
+    private void connectNewUser(ConnectionDto abstractDto) {
+        ConnectionDto connectionDto = abstractDto;
+        String senderName = connectionDto.getUsername();
+        notifyClientsAboutNewUser(senderName);
+        clients.put(senderName, this);
+        notifyUserAboutAllUsers();
     }
 
     private void notifyClientsAboutNewUser(String senderName) {
@@ -79,10 +82,12 @@ public class ClientHandler implements Runnable {
         sendToAll(messageMapper.mapToJson(newClientDto));
     }
 
-    private boolean isConnectMessage(AbstractDto abstractDto) {
-        return abstractDto.getEventType().equals(EventType.CONNECT);
+    private void notifyUserAboutAllUsers() {
+        UsersDto usersDto = new UsersDto();
+        List<String> usersList = new ArrayList<>(clients.keySet());
+        usersDto.setUsernames(usersList);
+        sendToAll(messageMapper.mapToJson(usersDto));
     }
-
     private void sendToAll(String requestMessage) {
         for (ClientHandler client : clients.values()) {
             client.printMessageToClient(requestMessage);

@@ -43,11 +43,11 @@ public class ClientView implements IncomingEventsHandler {
         messagePanel.addToMessageList(messageDto.toString());
     }
 
-    public void sendMessage(String message){
-        messageCommand.sendMessage(message);
+    public void sendMessage(String message) {
+        messageCommand.sendMessage(message, usersList.getSelectedValue());
     }
 
-    public void setDefaultButton(JButton button){
+    public void setDefaultButton(JButton button) {
         mainFrame.getRootPane().setDefaultButton(button);
     }
 

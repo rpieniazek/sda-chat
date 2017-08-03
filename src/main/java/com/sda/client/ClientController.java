@@ -41,10 +41,11 @@ public class ClientController implements MessageCommand, LoginCommand {
     }
 
     @Override
-    public void sendMessage(String message) {
+    public void sendMessage(String message, String receiverName) {
         message = encrypt(message);
         MessageDto messageDto = new MessageDto(message);
         messageDto.setSenderName(username);
+        messageDto.setReceiverName(receiverName);
         out.println(messageMapper.mapToJson(messageDto));
     }
 
@@ -60,6 +61,7 @@ public class ClientController implements MessageCommand, LoginCommand {
         while ((inMessage = in.readLine()) != null) {
             System.out.printf("received message%s\n", inMessage);
             AbstractDto abstractDto = messageMapper.mapFromJson(inMessage);
+            //// TODO: 2017-08-03
             if (isNormal(abstractDto)) {
                 MessageDto messageDto = (MessageDto) abstractDto;
                 messageDto.setContent(decrypt(messageDto.getContent()));
